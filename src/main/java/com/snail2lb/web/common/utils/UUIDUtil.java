@@ -10,7 +10,7 @@ import java.util.UUID;
  * 
  * 经测试，在生成一千万个数据也没有出现重复，完全满足大部分需求。
  * 
- * @author wangfan
+ * @author lvbiao
  * @date 2017-3-28 下午1:11:31
  */
 public class UUIDUtil {
@@ -24,7 +24,7 @@ public class UUIDUtil {
 	/**
 	 * 生成8位uuid
 	 * @return
-	 * @author wangfan
+	 * @author lvbiao
 	 */
 	public static String randomUUID8() {
 		StringBuffer shortBuffer = new StringBuffer();
@@ -40,7 +40,7 @@ public class UUIDUtil {
 	/**
 	 * 生成32位uuid
 	 * @return
-	 * @author wangfan
+	 * @author lvbiao
 	 */
 	public static String randomUUID32(){
 		String uuid = UUID.randomUUID().toString().replace("-", "");

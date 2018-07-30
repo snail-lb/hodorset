@@ -3,7 +3,7 @@ package com.wf.ew.common.utils;
 /**
  * 字符串工具类
  *
- * @author 王帆
+ * @author lvbiao
  * @date 2017-11-10 上午11:03:50
  */
 public class StringUtil {

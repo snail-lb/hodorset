@@ -5,7 +5,7 @@ import java.util.HashMap;
 /**
  * 返回结果对象
  *
- * @author wangfan
+ * @author lvbiao
  * @date 2017-6-10 上午10:10:07
  */
 public class JsonResult extends HashMap<String, Object> {

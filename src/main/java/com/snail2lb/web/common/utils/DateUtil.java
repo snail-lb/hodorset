@@ -28,7 +28,7 @@ import java.util.Date;
 
 /**
  * 日期时间工具类
- * @author wangfan
+ * @author lvbiao
  * @date 2017-4-1 下午2:37:33
  */
 public class DateUtil {

@@ -1,19 +1,23 @@
 package com.wf.ew.common.utils;
 
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+
 import org.springframework.data.redis.connection.DataType;
 import org.springframework.data.redis.core.Cursor;
 import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations.TypedTuple;
 
-import java.util.*;
-import java.util.Map.Entry;
-import java.util.concurrent.TimeUnit;
-
 /**
  * Redis工具类
  *
- * @author WangFan
+ * @author lvbiao
  * @version 1.1 (GitHub文档: https://github.com/whvcse/RedisUtil )
  * @date 2018-02-24 下午03:09:50
  */

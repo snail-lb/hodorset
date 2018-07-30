@@ -2,7 +2,7 @@ package com.wf.ew.common.exception;
 
 /**
  * 业务异常
- * Created by wangfan on 2018-02-22 上午 11:29.
+ * Created by lvbiao on 2018-02-22 上午 11:29.
  */
 public class BusinessException extends IException {
     private static final long serialVersionUID = 5450935008012318697L;

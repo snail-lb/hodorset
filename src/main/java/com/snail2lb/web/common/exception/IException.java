@@ -2,7 +2,7 @@ package com.wf.ew.common.exception;
 
 /**
  * 自定义异常基类
- * Created by wangfan on 2018-02-22 上午 11:29.
+ * Created by lvbiao on 2018-02-22 上午 11:29.
  */
 public abstract class IException extends RuntimeException {
     private static final long serialVersionUID = -1582874427218948396L;

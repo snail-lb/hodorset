@@ -11,7 +11,7 @@ import java.util.Map;
 
 /**
  * 全局异常处理器
- * Created by wangfan on 2018-02-22 上午 11:29.
+ * Created by lvbiao on 2018-02-22 上午 11:29.
  */
 @ControllerAdvice
 public class MyExceptionHandler {

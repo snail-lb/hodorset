@@ -1,13 +1,13 @@
 package com.wf.ew.common.utils;
 
-import eu.bitwalker.useragentutils.UserAgent;
-
 import javax.servlet.http.HttpServletRequest;
+
+import eu.bitwalker.useragentutils.UserAgent;
 
 /**
  * 获取客户端设备信息
  * 
- * @author wangfan
+ * @author lvbiao
  * @date 2017-7-24 下午3:47:39
  */
 public class UserAgentGetter {
