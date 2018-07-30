@@ -1,6 +1,6 @@
-package com.wf.ew.system.service;
+package com.snail2lb.web.system.service;
 
-import com.wf.ew.system.model.Authorities;
+import com.snail2lb.web.system.model.Authorities;
 
 import java.util.List;
 

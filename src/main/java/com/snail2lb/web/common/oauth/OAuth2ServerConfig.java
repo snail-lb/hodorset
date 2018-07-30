@@ -1,4 +1,4 @@
-package com.wf.ew.common.oauth;
+package com.snail2lb.web.common.oauth;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

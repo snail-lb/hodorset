@@ -1,7 +1,7 @@
-package com.wf.ew.common.oauth;
+package com.snail2lb.web.common.oauth;
 
-import com.wf.ew.system.service.impl.UserDetailsServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.snail2lb.web.system.service.impl.UserDetailsServiceImpl;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

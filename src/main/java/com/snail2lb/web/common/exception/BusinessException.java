@@ -1,4 +1,4 @@
-package com.wf.ew.common.exception;
+package com.snail2lb.web.common.exception;
 
 /**
  * 业务异常

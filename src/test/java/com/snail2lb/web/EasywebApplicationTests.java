@@ -1,4 +1,4 @@
-package com.wf.ew;
+package com.snail2lb.web;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,4 +1,4 @@
-package com.wf.ew.common.utils;
+package com.snail2lb.web.common.utils;
 
 /**
  * 字符串工具类

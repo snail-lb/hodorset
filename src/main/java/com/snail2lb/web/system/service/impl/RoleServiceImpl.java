@@ -1,15 +1,15 @@
-package com.wf.ew.system.service.impl;
+package com.snail2lb.web.system.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
-import com.wf.ew.common.exception.ParameterException;
-import com.wf.ew.common.utils.UUIDUtil;
-import com.wf.ew.system.dao.RoleAuthoritiesMapper;
-import com.wf.ew.system.dao.RoleMapper;
-import com.wf.ew.system.dao.UserRoleMapper;
-import com.wf.ew.system.model.Role;
-import com.wf.ew.system.model.UserRole;
-import com.wf.ew.system.service.RoleService;
+import com.snail2lb.web.common.utils.UUIDUtil;
+import com.snail2lb.web.system.model.Role;
+import com.snail2lb.web.common.exception.ParameterException;
+import com.snail2lb.web.system.dao.RoleAuthoritiesMapper;
+import com.snail2lb.web.system.dao.RoleMapper;
+import com.snail2lb.web.system.dao.UserRoleMapper;
+import com.snail2lb.web.system.model.UserRole;
+import com.snail2lb.web.system.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

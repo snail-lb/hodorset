@@ -1,7 +1,7 @@
-package com.wf.ew.system.service;
+package com.snail2lb.web.system.service;
 
-import com.wf.ew.common.PageResult;
-import com.wf.ew.system.model.LoginRecord;
+import com.snail2lb.web.common.PageResult;
+import com.snail2lb.web.system.model.LoginRecord;
 
 public interface LoginRecordService {
 

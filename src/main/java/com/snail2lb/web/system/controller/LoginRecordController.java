@@ -1,7 +1,8 @@
-package com.wf.ew.system.controller;
+package com.snail2lb.web.system.controller;
 
-import com.wf.ew.common.PageResult;
-import com.wf.ew.common.utils.StringUtil;
+import com.snail2lb.web.system.model.LoginRecord;
+import com.snail2lb.web.common.PageResult;
+import com.snail2lb.web.common.utils.StringUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -11,8 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wf.ew.system.model.LoginRecord;
-import com.wf.ew.system.service.LoginRecordService;
+import com.snail2lb.web.system.service.LoginRecordService;
 
 @Api(value = "登录日志相关的接口", tags = "loginRecord")
 @RestController

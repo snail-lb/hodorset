@@ -1,4 +1,4 @@
-package com.wf.ew.common.exception;
+package com.snail2lb.web.common.exception;
 
 /**
  * 自定义异常基类

@@ -1,4 +1,4 @@
-package com.wf.ew.common.config;
+package com.snail2lb.web.common.config;
 
 import com.baomidou.mybatisplus.mapper.ISqlInjector;
 import com.baomidou.mybatisplus.mapper.LogicSqlInjector;

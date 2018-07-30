@@ -1,4 +1,4 @@
-package com.wf.ew.common;
+package com.snail2lb.web.common;
 
 import java.util.HashMap;
 

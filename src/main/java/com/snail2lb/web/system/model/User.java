@@ -1,4 +1,4 @@
-package com.wf.ew.system.model;
+package com.snail2lb.web.system.model;
 
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;

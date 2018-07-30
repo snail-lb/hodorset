@@ -1,7 +1,8 @@
-package com.wf.ew.system.dao;
+package com.snail2lb.web.system.dao;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
-import com.wf.ew.system.model.Authorities;
+import com.snail2lb.web.system.model.Authorities;
+
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

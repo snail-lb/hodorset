@@ -1,9 +1,9 @@
-package com.wf.ew.system.service.impl;
+package com.snail2lb.web.system.service.impl;
 
-import com.wf.ew.system.dao.AuthoritiesMapper;
-import com.wf.ew.system.dao.UserMapper;
-import com.wf.ew.system.model.Authorities;
-import com.wf.ew.system.model.User;
+import com.snail2lb.web.system.model.Authorities;
+import com.snail2lb.web.system.dao.AuthoritiesMapper;
+import com.snail2lb.web.system.dao.UserMapper;
+import com.snail2lb.web.system.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

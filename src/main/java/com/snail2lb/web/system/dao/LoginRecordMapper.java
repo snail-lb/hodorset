@@ -1,9 +1,9 @@
-package com.wf.ew.system.dao;
+package com.snail2lb.web.system.dao;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.wf.ew.system.model.LoginRecord;
-import com.wf.ew.system.model.User;
+import com.snail2lb.web.system.model.LoginRecord;
+
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

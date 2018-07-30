@@ -1,4 +1,4 @@
-package com.wf.ew.common.utils;
+package com.snail2lb.web.common.utils;
 
 import java.util.UUID;
 

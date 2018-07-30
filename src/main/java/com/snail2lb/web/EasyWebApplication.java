@@ -1,4 +1,4 @@
-package com.wf.ew;
+package com.snail2lb.web;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

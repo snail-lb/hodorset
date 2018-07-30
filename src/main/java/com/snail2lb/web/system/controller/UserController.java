@@ -1,18 +1,17 @@
-package com.wf.ew.system.controller;
+package com.snail2lb.web.system.controller;
 
-import com.wf.ew.common.BaseController;
-import com.wf.ew.common.JsonResult;
-import com.wf.ew.common.PageResult;
-import com.wf.ew.common.utils.StringUtil;
-import com.wf.ew.system.model.Role;
-import com.wf.ew.system.model.User;
-import com.wf.ew.system.service.UserService;
+import com.snail2lb.web.common.JsonResult;
+import com.snail2lb.web.common.PageResult;
+import com.snail2lb.web.common.utils.StringUtil;
+import com.snail2lb.web.system.model.Role;
+import com.snail2lb.web.system.service.UserService;
+import com.snail2lb.web.common.BaseController;
+import com.snail2lb.web.system.model.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 

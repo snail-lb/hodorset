@@ -1,13 +1,13 @@
-package com.wf.ew.system.controller;
+package com.snail2lb.web.system.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.wf.ew.common.BaseController;
-import com.wf.ew.common.JsonResult;
-import com.wf.ew.common.PageResult;
-import com.wf.ew.common.utils.ReflectUtil;
-import com.wf.ew.system.model.Authorities;
-import com.wf.ew.system.service.AuthoritiesService;
+import com.snail2lb.web.common.BaseController;
+import com.snail2lb.web.common.JsonResult;
+import com.snail2lb.web.common.PageResult;
+import com.snail2lb.web.common.utils.ReflectUtil;
+import com.snail2lb.web.system.model.Authorities;
+import com.snail2lb.web.system.service.AuthoritiesService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;

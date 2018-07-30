@@ -1,4 +1,4 @@
-package com.wf.ew.common.utils;
+package com.snail2lb.web.common.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;

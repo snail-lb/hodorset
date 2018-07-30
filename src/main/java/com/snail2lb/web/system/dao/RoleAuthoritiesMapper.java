@@ -1,7 +1,7 @@
-package com.wf.ew.system.dao;
+package com.snail2lb.web.system.dao;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
-import com.wf.ew.system.model.RoleAuthorities;
+import com.snail2lb.web.system.model.RoleAuthorities;
 
 public interface RoleAuthoritiesMapper extends BaseMapper<RoleAuthorities> {
 

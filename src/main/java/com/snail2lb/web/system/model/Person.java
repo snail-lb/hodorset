@@ -1,4 +1,4 @@
-package com.wf.ew.system.model;
+package com.snail2lb.web.system.model;
 
 import java.util.Date;
 

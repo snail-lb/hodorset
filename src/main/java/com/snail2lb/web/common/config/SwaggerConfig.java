@@ -1,4 +1,4 @@
-package com.wf.ew.common.config;
+package com.snail2lb.web.common.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

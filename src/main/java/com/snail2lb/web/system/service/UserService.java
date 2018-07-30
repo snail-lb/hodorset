@@ -1,9 +1,9 @@
-package com.wf.ew.system.service;
+package com.snail2lb.web.system.service;
 
-import com.wf.ew.common.PageResult;
-import com.wf.ew.common.exception.BusinessException;
-import com.wf.ew.common.exception.ParameterException;
-import com.wf.ew.system.model.User;
+import com.snail2lb.web.common.PageResult;
+import com.snail2lb.web.common.exception.BusinessException;
+import com.snail2lb.web.common.exception.ParameterException;
+import com.snail2lb.web.system.model.User;
 
 public interface UserService {
 

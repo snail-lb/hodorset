@@ -1,4 +1,4 @@
-package com.wf.ew.common.utils;
+package com.snail2lb.web.common.utils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

@@ -1,7 +1,7 @@
-package com.wf.ew.system.controller;
+package com.snail2lb.web.system.controller;
 
-import com.wf.ew.common.BaseController;
-import com.wf.ew.common.JsonResult;
+import com.snail2lb.web.common.JsonResult;
+import com.snail2lb.web.common.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
