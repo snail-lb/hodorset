@@ -1,22 +1,27 @@
 package com.snail2lb.web.system.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.snail2lb.web.common.BaseController;
 import com.snail2lb.web.common.JsonResult;
 import com.snail2lb.web.common.PageResult;
 import com.snail2lb.web.common.utils.StringUtil;
 import com.snail2lb.web.system.model.Role;
-import com.snail2lb.web.system.service.UserService;
-import com.snail2lb.web.common.BaseController;
 import com.snail2lb.web.system.model.User;
+import com.snail2lb.web.system.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Api(value = "用户相关的接口", tags = "user")
 @RestController
@@ -65,7 +70,6 @@ public class UserController extends BaseController {
             roleIds.add(role);
         }
         user.setRoles(roleIds);
-        user.setPassword("123456");
         if (userService.add(user)) {
             return JsonResult.ok("添加成功");
         } else {
@@ -81,9 +85,6 @@ public class UserController extends BaseController {
     })
     @PutMapping()
     public JsonResult update(User user, String roleId) {
-        if ("admin".equals(user.getUserId())) {
-            return JsonResult.error("演示系统不能操作admin");
-        }
         List<Role> roleIds = new ArrayList<>();
         String[] split = roleId.split(",");
         for (String t : split) {
@@ -107,9 +108,6 @@ public class UserController extends BaseController {
     })
     @PutMapping("/state")
     public JsonResult updateState(String userId, Integer state) {
-        if (true) {
-            return JsonResult.error("演示系统关闭该功能");
-        }
         if (userService.updateState(userId, state)) {
             return JsonResult.ok();
         } else {
@@ -125,9 +123,6 @@ public class UserController extends BaseController {
     })
     @PutMapping("/psw")
     public JsonResult updatePsw(String oldPsw, String newPsw) {
-        if (true) {
-            return JsonResult.error("演示系统关闭该功能");
-        }
         String finalSecret = "{bcrypt}" + new BCryptPasswordEncoder().encode(oldPsw);
         if (finalSecret.equals(getLoginUser().getPassword())) {
             return JsonResult.error("原密码输入不正确");
@@ -142,14 +137,12 @@ public class UserController extends BaseController {
     @ApiOperation(value = "重置密码", notes = "")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", value = "用户id", required = true, dataType = "String", paramType = "path"),
+            @ApiImplicitParam(name = "passWord", value = "用户密码", required = true, dataType = "String", paramType = "path"),
             @ApiImplicitParam(name = "access_token", value = "令牌", required = true, dataType = "String")
     })
-    @PutMapping("/psw/{id}")
-    public JsonResult resetPsw(@PathVariable("id") String userId) {
-        if ("admin".equals(userId)) {
-            return JsonResult.error("演示系统不能操作admin");
-        }
-        if (userService.updatePsw(userId, "123456")) {
+    @PutMapping("/psw/{id}/{psw}")
+    public JsonResult resetPsw(@PathVariable("id") String userId,@PathVariable("passWord") String passWord) {
+        if (userService.updatePsw(userId, passWord)) {
             return JsonResult.ok("重置成功");
         } else {
             return JsonResult.error("重置失败");

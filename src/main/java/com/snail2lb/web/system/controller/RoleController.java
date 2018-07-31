@@ -1,5 +1,17 @@
 package com.snail2lb.web.system.controller;
 
+import java.util.Iterator;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.snail2lb.web.common.JsonResult;
 import com.snail2lb.web.common.PageResult;
 import com.snail2lb.web.system.model.Role;
@@ -8,11 +20,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Iterator;
-import java.util.List;
 
 @Api(value = "角色相关的接口", tags = "role")
 @RestController
@@ -75,9 +82,6 @@ public class RoleController {
     })
     @DeleteMapping("/{id}")
     public JsonResult delete(@PathVariable("id") String roleId) {
-        if (true) {
-            return JsonResult.error("演示系统关闭该功能");
-        }
         if (roleService.updateState(roleId, 1)) {
             return JsonResult.ok("删除成功");
         }
