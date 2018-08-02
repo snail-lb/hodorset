@@ -27,14 +27,14 @@
                     <label class="layui-form-label"><i class="layui-icon layui-icon-username"></i></label>
                     <div class="layui-input-block">
                         <input name="username" type="text" lay-verify="required" placeholder="账号"
-                               class="layui-input">
+                               class="layui-input" lay-verType="tips" autocomplete="off">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label"><i class="layui-icon layui-icon-password"></i></label>
                     <div class="layui-input-block">
                         <input name="password" type="password" lay-verify="required" placeholder="密码"
-                               class="layui-input">
+                               class="layui-input" lay-verType="tips" autocomplete="off">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -43,7 +43,7 @@
                         <div class="layui-row inline-block">
                             <div class="layui-col-xs7">
                                 <input name="code" type="text" lay-verify="required" placeholder="验证码"
-                                       class="layui-input">
+                                       class="layui-input" lay-verType="tips" autocomplete="off">
                             </div>
                             <div class="layui-col-xs5" style="padding-left: 10px;">
                                 <img class="login-captcha" src="https://www.oschina.net/action/user/captcha">
@@ -77,29 +77,29 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label"><i class="layui-icon layui-icon-username"></i></label>
                     <div class="layui-input-block">
-                        <input name="username" type="text" lay-verify="required" placeholder="用户名"
-                               class="layui-input">
+                        <input name="username" type="text" lay-verify="required|username" placeholder="用户名"
+                               class="layui-input" lay-verType="tips" autocomplete="off">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label"><i class="layui-icon layui-icon-password"></i></label>
                     <div class="layui-input-block">
-                        <input name="password" type="password" lay-verify="required" placeholder="密码"
-                               class="layui-input">
+                        <input name="registry-password" type="password" lay-verify="required|password" placeholder="密码"
+                               class="layui-input" lay-verType="tips" autocomplete="off">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label"><i class="layui-icon layui-icon-password"></i></label>
                     <div class="layui-input-block">
-                        <input name="verify_password" type="password" lay-verify="required" placeholder="再次输入密码"
-                               class="layui-input">
+                        <input name="verify_password" type="password" lay-verify="required|password|verify_password" placeholder="再次输入密码"
+                               class="layui-input"  lay-verType="tips" autocomplete="off">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label"><i class="layui-icon layui-icon-cellphone"></i></label>
                     <div class="layui-input-block">
-                        <input name="phone" type="tel" lay-verify="required phone" placeholder="手机"
-                               class="layui-input">
+                        <input name="email" type="email" lay-verify="required|email" placeholder="邮箱"
+                               class="layui-input"  lay-verType="tips" autocomplete="off">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -108,7 +108,7 @@
                         <div class="layui-row inline-block">
                             <div class="layui-col-xs7">
                                 <input name="code" type="text" lay-verify="required" placeholder="验证码"
-                                       class="layui-input">
+                                       class="layui-input" lay-verType="tips" autocomplete="off">
                             </div>
                             <div class="layui-col-xs5" style="padding-left: 10px;">
                                 <img class="login-captcha" src="https://www.oschina.net/action/user/captcha">
@@ -118,7 +118,7 @@
                 </div>
                 <div class="layui-form-item">
                     <a href="javascript:;" onclick="to_login()" class="layui-link">已有账号，直接登录</a>
-                    <a href="javascript:;" class="layui-link  pull-right">重 置&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                    <a href="javascript:;" type="reset" class="layui-link  pull-right">重 置&nbsp;&nbsp;&nbsp;&nbsp;</a>
                 </div>
                 <div class="layui-form-item">
                     <button lay-filter="register-submit" class="layui-btn layui-btn-fluid" lay-submit>注 册</button>
@@ -148,16 +148,34 @@
     var $;
     layui.config({
         base: 'module/'
-    }).use(['config', 'form'], function () {
+    }).use(['config', 'form', 'layer'], function () {
         $ = layui.jquery;
         var form = layui.form;
         var config = layui.config;
+        var layer = layui.layer;
 
         if (config.getToken()) {
             location.replace('./');
             return;
         }
 
+        //自定义验证规则
+        form.verify({
+            username: function(value){
+                if(value.length < 3){
+                    return '用户名长度应该大于三位';
+                }
+            }
+            ,password: [/(.+){3,12}$/, '密码必须3到12位']
+            ,verify_password: function(value){
+                var pwd = $('input[name=registry-password]').val();
+                if(value != pwd){
+                    return '两次密码不一致';
+                }
+            }
+        });
+
+        
         // 表单提交
         form.on('submit(login-submit)', function (obj) {
             var field = obj.field;
@@ -193,6 +211,44 @@
                     }
                 }
             });
+        });
+
+        form.on('submit(register-submit)', function (obj) {
+            var field = obj.field;
+
+            var field = obj.field;
+            field.grant_type = 'password';
+            field.scope = 'select';
+            field.client_id = 'client_2';
+            field.client_secret = '123456';
+
+            /*layer.load(2);
+            $.ajax({
+                url: config.base_server + 'oauth/token',
+                data: field,
+                type: 'POST',
+                dataType: 'JSON',
+                success: function (data) {
+                    console.log(JSON.stringify(data));
+                    if (data.access_token) {
+                        config.putToken(data);
+                        layer.msg('登录成功', {icon: 1}, function () {
+                            location.replace('./');
+                        });
+                    } else {
+                        layer.closeAll('loading');
+                        layer.msg('登录失败，请重试', {icon: 5});
+                    }
+                },
+                error: function (xhr) {
+                    layer.closeAll('loading');
+                    if (xhr.status == 400) {
+                        layer.msg('账号或密码错误', {icon: 5});
+                    } else {
+                        layer.msg('登录失败，请按f12查看console错误信息', {icon: 5});
+                    }
+                }
+            });*/
         });
 
         // 图形验证码
