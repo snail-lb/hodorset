@@ -17,7 +17,7 @@
         <img src="assets/images/logo.png"> EasyWeb
     </div>
 
-    <div class=" login-body">
+    <div class=" login-body layui-anim layui-anim-up" id="login_body">
         <div class="layui-card">
             <div class="layui-card-header">
                 <i class="layui-icon layui-icon-engine"></i>&nbsp;&nbsp;用户登录
@@ -52,11 +52,76 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <a href="javascript:;" class="layui-link">帐号注册</a>
+                    <a href="javascript:;" onclick="to_register()" class="layui-link" >帐号注册</a>
                     <a href="javascript:;" class="layui-link pull-right">忘记密码？</a>
                 </div>
                 <div class="layui-form-item">
                     <button lay-filter="login-submit" class="layui-btn layui-btn-fluid" lay-submit>登 录</button>
+                </div>
+                <div class="layui-form-item login-other">
+                    <label>第三方登录</label>
+                    <a href="javascript:;"><i class="layui-icon layui-icon-login-qq"></i></a>
+                    <a href="javascript:;"><i class="layui-icon layui-icon-login-wechat"></i></a>
+                    <a href="javascript:;"><i class="layui-icon layui-icon-login-weibo"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class=" login-body layui-hide layui-anim layui-anim-up" id="register_body">
+        <div class="layui-card">
+            <div class="layui-card-header">
+                <i class="layui-icon layui-icon-engine"></i>&nbsp;&nbsp;用户注册
+            </div>
+            <div class="layui-card-body layui-form layui-form-pane">
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><i class="layui-icon layui-icon-username"></i></label>
+                    <div class="layui-input-block">
+                        <input name="username" type="text" lay-verify="required" placeholder="用户名"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><i class="layui-icon layui-icon-password"></i></label>
+                    <div class="layui-input-block">
+                        <input name="password" type="password" lay-verify="required" placeholder="密码"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><i class="layui-icon layui-icon-password"></i></label>
+                    <div class="layui-input-block">
+                        <input name="verify_password" type="password" lay-verify="required" placeholder="再次输入密码"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><i class="layui-icon layui-icon-cellphone"></i></label>
+                    <div class="layui-input-block">
+                        <input name="phone" type="tel" lay-verify="required phone" placeholder="手机"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><i class="layui-icon layui-icon-vercode"></i></label>
+                    <div class="layui-input-block">
+                        <div class="layui-row inline-block">
+                            <div class="layui-col-xs7">
+                                <input name="code" type="text" lay-verify="required" placeholder="验证码"
+                                       class="layui-input">
+                            </div>
+                            <div class="layui-col-xs5" style="padding-left: 10px;">
+                                <img class="login-captcha" src="https://www.oschina.net/action/user/captcha">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <a href="javascript:;" onclick="to_login()" class="layui-link">已有账号，直接登录</a>
+                    <a href="javascript:;" class="layui-link  pull-right">重 置&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                </div>
+                <div class="layui-form-item">
+                    <button lay-filter="register-submit" class="layui-btn layui-btn-fluid" lay-submit>注 册</button>
                 </div>
                 <div class="layui-form-item login-other">
                     <label>第三方登录</label>
@@ -80,10 +145,11 @@
 
 <script type="text/javascript" src="assets/libs/layui/layui.js"></script>
 <script>
+    var $;
     layui.config({
         base: 'module/'
     }).use(['config', 'form'], function () {
-        var $ = layui.jquery;
+        $ = layui.jquery;
         var form = layui.form;
         var config = layui.config;
 
@@ -134,6 +200,18 @@
             this.src = this.src + '?t=' + (new Date).getTime();
         });
     });
+
+    // 注册
+    function to_register() {
+        $('#login_body').addClass("layui-hide");
+        $('#register_body').removeClass("layui-hide");
+    }
+
+    //登录
+    function to_login() {
+        $('#login_body').removeClass("layui-hide");
+        $('#register_body').addClass("layui-hide");
+    }
 </script>
 </body>
 </html>
