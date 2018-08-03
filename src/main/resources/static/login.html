@@ -52,7 +52,7 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <a href="javascript:;" onclick="to_register()" class="layui-link" >帐号注册</a>
+                    <a href="javascript:;" id="to_register" class="layui-link" >帐号注册</a>
                     <a href="javascript:;" class="layui-link pull-right">忘记密码？</a>
                 </div>
                 <div class="layui-form-item">
@@ -84,8 +84,8 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label"><i class="layui-icon layui-icon-password"></i></label>
                     <div class="layui-input-block">
-                        <input name="registry-password" type="password" lay-verify="required|password" placeholder="密码"
-                               class="layui-input" lay-verType="tips" autocomplete="off">
+                        <input name="password" type="password" lay-verify="required|password" placeholder="密码"
+                               id="register-password" class="layui-input" lay-verType="tips" autocomplete="off">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -96,10 +96,24 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
+                    <label class="layui-form-label"><i class="layui-icon layui-icon-friends"></i></label>
+                    <div class="layui-input-block">
+                        <input name="nickName" type="text" lay-verify="required" placeholder="昵称"
+                               class="layui-input" lay-verType="tips" autocomplete="off">
+                    </div>
+                </div>
+                <div class="layui-form-item">
                     <label class="layui-form-label"><i class="layui-icon layui-icon-cellphone"></i></label>
                     <div class="layui-input-block">
                         <input name="email" type="email" lay-verify="required|email" placeholder="邮箱"
-                               class="layui-input"  lay-verType="tips" autocomplete="off">
+                        class="layui-input"  lay-verType="tips" autocomplete="off">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><i class="layui-icon layui-icon-face-smile"></i></label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="sex" value="男" title="男" checked="">
+                        <input type="radio" name="sex" value="女" title="女">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -117,8 +131,8 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <a href="javascript:;" onclick="to_login()" class="layui-link">已有账号，直接登录</a>
-                    <a href="javascript:;" type="reset" class="layui-link  pull-right">重 置&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                    <a href="javascript:;" id="to_login" class="layui-link">已有账号，直接登录</a>
+                    <a href="javascript:;" id="reset-form" class="layui-link  pull-right">重 置&nbsp;&nbsp;&nbsp;&nbsp;</a>
                 </div>
                 <div class="layui-form-item">
                     <button lay-filter="register-submit" class="layui-btn layui-btn-fluid" lay-submit>注 册</button>
@@ -168,14 +182,15 @@
             }
             ,password: [/(.+){3,12}$/, '密码必须3到12位']
             ,verify_password: function(value){
-                var pwd = $('input[name=registry-password]').val();
+                var pwd = $('#register-password').val();
                 if(value != pwd){
                     return '两次密码不一致';
                 }
             }
         });
 
-        
+        //后台数据库表改造， 验证码验证
+
         // 表单提交
         form.on('submit(login-submit)', function (obj) {
             var field = obj.field;
@@ -214,17 +229,15 @@
         });
 
         form.on('submit(register-submit)', function (obj) {
+            console.log(obj);
             var field = obj.field;
+            field.password = field.verify_password;
+            field.verify_password = null;
+            field.verify_password = null;
 
-            var field = obj.field;
-            field.grant_type = 'password';
-            field.scope = 'select';
-            field.client_id = 'client_2';
-            field.client_secret = '123456';
-
-            /*layer.load(2);
+            layer.load(2);
             $.ajax({
-                url: config.base_server + 'oauth/token',
+                url: config.base_server + 'register',
                 data: field,
                 type: 'POST',
                 dataType: 'JSON',
@@ -232,42 +245,45 @@
                     console.log(JSON.stringify(data));
                     if (data.access_token) {
                         config.putToken(data);
-                        layer.msg('登录成功', {icon: 1}, function () {
+                        layer.msg('注册成功', {icon: 1}, function () {
                             location.replace('./');
                         });
                     } else {
                         layer.closeAll('loading');
-                        layer.msg('登录失败，请重试', {icon: 5});
+                        layer.msg('注册失败，请重试', {icon: 5});
                     }
                 },
                 error: function (xhr) {
                     layer.closeAll('loading');
-                    if (xhr.status == 400) {
-                        layer.msg('账号或密码错误', {icon: 5});
-                    } else {
-                        layer.msg('登录失败，请按f12查看console错误信息', {icon: 5});
-                    }
+                    layer.msg('注册失败,' + xhr.msg, {icon: 5});
                 }
-            });*/
+            });
         });
 
         // 图形验证码
         $('.login-captcha').click(function () {
             this.src = this.src + '?t=' + (new Date).getTime();
         });
+
+        //重置表单
+        $('#reset-form').click(function () {
+            form.val('');
+            layer.msg('hello');
+        });
+
+        //进入注册界面
+        $('#to_register').click(function () {
+            $('#login_body').addClass("layui-hide");
+            $('#register_body').removeClass("layui-hide");
+        });
+
+        //进入登录页面
+        $('#to_login').click(function () {
+            $('#login_body').removeClass("layui-hide");
+            $('#register_body').addClass("layui-hide");
+        });
+
     });
-
-    // 注册
-    function to_register() {
-        $('#login_body').addClass("layui-hide");
-        $('#register_body').removeClass("layui-hide");
-    }
-
-    //登录
-    function to_login() {
-        $('#login_body').removeClass("layui-hide");
-        $('#register_body').addClass("layui-hide");
-    }
 </script>
 </body>
 </html>

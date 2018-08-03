@@ -54,7 +54,7 @@ public class UserController extends BaseController {
         return userService.list(page, limit, true, searchKey, searchValue);
     }
 
-    @ApiOperation(value = "添加用户", notes = "")
+    @ApiOperation(value = "添加用户", notes = "添加用户")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "user", value = "用户信息", required = true, dataType = "User"),
             @ApiImplicitParam(name = "roleId", value = "用户角色id，多个用','分割", required = true, dataType = "String"),

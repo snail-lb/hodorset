@@ -1,8 +1,9 @@
 package com.snail2lb.web.common;
 
-import com.snail2lb.web.system.model.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+
+import com.snail2lb.web.system.model.User;
 
 /**
  * Controller基类

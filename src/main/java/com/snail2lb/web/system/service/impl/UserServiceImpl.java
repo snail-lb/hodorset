@@ -79,7 +79,9 @@ public class UserServiceImpl implements UserService {
         String finalSecret = "{bcrypt}" + new BCryptPasswordEncoder().encode(user.getPassword());
         user.setPassword(finalSecret);
         user.setState(0);
-        user.setCreateTime(new Date());
+        Date date = new Date();
+        user.setCreateTime(date);
+        user.setUpdateTime(date);
         try {
             boolean rs = userMapper.insert(user) > 0;
             if (rs) {
