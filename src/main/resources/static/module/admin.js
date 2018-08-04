@@ -3,6 +3,7 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
     var layer = layui.layer;
     var element = layui.element;
     var form = layui.form;
+    var $ = layui.jquery;
     var popupRightIndex, popupCenterIndex, popupCenterParam;
 
     var admin = {

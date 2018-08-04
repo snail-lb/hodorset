@@ -114,10 +114,11 @@
         </dependency>
 
         <!-- 热加载 -->
-        <dependency>
+        <!--<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
-        </dependency>
+            <optional>true</optional>
+        </dependency>-->
     </dependencies>
 
     <!-- github上的一些开源项目都是有用的这个仓库 -->

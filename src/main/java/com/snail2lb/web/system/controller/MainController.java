@@ -38,10 +38,24 @@ public class MainController extends BaseController {
         //暂时设置默认角色为user
         role.setRoleId("user");
         user.setRoles(Arrays.asList(role));
-        if (userService.add(user)) {
-            return JsonResult.ok("添加成功");
+
+        boolean result = userService.add(user);
+        if (result) {
+            return JsonResult.ok("注册用户成功");
+        }else{
+            return JsonResult.error("注册用户失败");
+        }
+    }
+
+    @ApiOperation(value = "根据username检查用户是否存在")
+    @ApiImplicitParam(name = "username", value = "用户名", required = true, dataType = "String")
+    @GetMapping("/verifyUsername")
+    public JsonResult verifyUsername(String username) {
+        User user = userService.getByUsername(username);
+        if (null == user) {
+            return JsonResult.ok("用户不存在");
         } else {
-            return JsonResult.error("添加失败");
+            return JsonResult.error("用户已存在");
         }
     }
 }

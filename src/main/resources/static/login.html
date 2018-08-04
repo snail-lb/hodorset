@@ -17,7 +17,7 @@
         <img src="assets/images/logo.png"> EasyWeb
     </div>
 
-    <div class=" login-body layui-anim layui-anim-up" id="login_body">
+    <div class=" login-body layui-anim layui-anim-up" id="login-body">
         <div class="layui-card">
             <div class="layui-card-header">
                 <i class="layui-icon layui-icon-engine"></i>&nbsp;&nbsp;用户登录
@@ -52,7 +52,7 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <a href="javascript:;" id="to_register" class="layui-link" >帐号注册</a>
+                    <a href="javascript:;" id="register-html" class="layui-link" >帐号注册</a>
                     <a href="javascript:;" class="layui-link pull-right">忘记密码？</a>
                 </div>
                 <div class="layui-form-item">
@@ -68,7 +68,7 @@
         </div>
     </div>
 
-    <div class=" login-body layui-hide layui-anim layui-anim-up" id="register_body">
+    <div class=" login-body layui-hide layui-anim layui-anim-up" lay-filter="register-filter" id="register-body">
         <div class="layui-card">
             <div class="layui-card-header">
                 <i class="layui-icon layui-icon-engine"></i>&nbsp;&nbsp;用户注册
@@ -131,7 +131,7 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <a href="javascript:;" id="to_login" class="layui-link">已有账号，直接登录</a>
+                    <a href="javascript:;" id="login-html" class="layui-link">已有账号，直接登录</a>
                     <a href="javascript:;" id="reset-form" class="layui-link  pull-right">重 置&nbsp;&nbsp;&nbsp;&nbsp;</a>
                 </div>
                 <div class="layui-form-item">
@@ -159,14 +159,15 @@
 
 <script type="text/javascript" src="assets/libs/layui/layui.js"></script>
 <script>
-    var $;
+
     layui.config({
         base: 'module/'
-    }).use(['config', 'form', 'layer'], function () {
-        $ = layui.jquery;
+    }).use(['config', 'form', 'layer', 'admin'], function () {
+        var $ = layui.jquery;
         var form = layui.form;
         var config = layui.config;
         var layer = layui.layer;
+        var admin = layui.admin;
 
         if (config.getToken()) {
             location.replace('./');
@@ -176,6 +177,7 @@
         //自定义验证规则
         form.verify({
             username: function(value){
+                //验证格式
                 if(value.length < 3){
                     return '用户名长度应该大于三位';
                 }
@@ -187,6 +189,20 @@
                     return '两次密码不一致';
                 }
             }
+        });
+
+        //重置表单
+        $('#reset-form').click(function () {
+            layer.msg('hello');
+            form.val("register-filter", {
+                "username": ""
+                ,"password": ""
+                ,"verify_password": ""
+                ,"nickName": ""
+                ,"email": ""
+                ,"sex": "男"
+            });
+            form.render();
         });
 
         //后台数据库表改造， 验证码验证
@@ -206,7 +222,7 @@
                 type: 'POST',
                 dataType: 'JSON',
                 success: function (data) {
-                    console.log(JSON.stringify(data));
+                    // console.log(JSON.stringify(data));
                     if (data.access_token) {
                         config.putToken(data);
                         layer.msg('登录成功', {icon: 1}, function () {
@@ -214,7 +230,7 @@
                         });
                     } else {
                         layer.closeAll('loading');
-                        layer.msg('登录失败，请重试', {icon: 5});
+                        layer.msg('登录失败：' + data.msg, {icon: 5});
                     }
                 },
                 error: function (xhr) {
@@ -229,12 +245,8 @@
         });
 
         form.on('submit(register-submit)', function (obj) {
-            console.log(obj);
             var field = obj.field;
-            field.password = field.verify_password;
-            field.verify_password = null;
-            field.verify_password = null;
-
+            //提交表单
             layer.load(2);
             $.ajax({
                 url: config.base_server + 'register',
@@ -242,20 +254,18 @@
                 type: 'POST',
                 dataType: 'JSON',
                 success: function (data) {
-                    console.log(JSON.stringify(data));
-                    if (data.access_token) {
-                        config.putToken(data);
-                        layer.msg('注册成功', {icon: 1}, function () {
-                            location.replace('./');
+                    layer.closeAll('loading');
+                    if (data.code == 200) {
+                        layer.msg('注册成功,请登录。', {icon: 1}, function () {
+                            login_body();
                         });
                     } else {
-                        layer.closeAll('loading');
-                        layer.msg('注册失败，请重试', {icon: 5});
+                        layer.msg('注册失败:' + data.msg, {icon: 5});
                     }
                 },
                 error: function (xhr) {
                     layer.closeAll('loading');
-                    layer.msg('注册失败,' + xhr.msg, {icon: 5});
+                    layer.msg('注册失败：' + xhr.msg, {icon: 5});
                 }
             });
         });
@@ -265,25 +275,22 @@
             this.src = this.src + '?t=' + (new Date).getTime();
         });
 
-        //重置表单
-        $('#reset-form').click(function () {
-            form.val('');
-            layer.msg('hello');
-        });
-
         //进入注册界面
-        $('#to_register').click(function () {
-            $('#login_body').addClass("layui-hide");
-            $('#register_body').removeClass("layui-hide");
+        $('#register-html').click(function () {
+            $('#login-body').addClass("layui-hide");
+            $('#register-body').removeClass("layui-hide");
         });
 
         //进入登录页面
-        $('#to_login').click(function () {
-            $('#login_body').removeClass("layui-hide");
-            $('#register_body').addClass("layui-hide");
+        $('#login-html').click(function () {
+            login_body();
         });
-
+        function login_body() {
+            $('#login-body').removeClass("layui-hide");
+            $('#register-body').addClass("layui-hide");
+        }
     });
+
 </script>
 </body>
 </html>
