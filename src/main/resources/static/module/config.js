@@ -30,7 +30,7 @@ layui.define(function (exports) {
             name: '主页',
             icon: 'layui-icon-home',
             subMenus: [{
-                name: '主页一',
+                name: '网站介绍',
                 url: 'console',
                 path: 'console.html'
             }]
@@ -58,6 +58,18 @@ layui.define(function (exports) {
                 path: 'system/login_record.html',
                 auth: 'get:/loginRecord'
             }]
+        }, {
+                name: '数据分析',
+                icon: 'layui-icon-chart',
+                subMenus: [{
+                    name: '数据可视化',
+                    url: 'bi',
+                    path: 'data/bi.html'
+                }, {
+                    name: '数据分析',
+                    url: 'analyze',
+                    path: 'data/analyze.html'
+                }]
         }],
         // 当前登录的用户
         getUser: function () {
