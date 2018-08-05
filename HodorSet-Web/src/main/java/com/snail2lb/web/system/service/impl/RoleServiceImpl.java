@@ -1,20 +1,21 @@
 package com.snail2lb.web.system.service.impl;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.mapper.Wrapper;
-import com.snail2lb.web.common.utils.UUIDUtil;
-import com.snail2lb.web.system.model.Role;
-import com.snail2lb.web.common.exception.ParameterException;
-import com.snail2lb.web.system.dao.RoleAuthoritiesMapper;
-import com.snail2lb.web.system.dao.RoleMapper;
-import com.snail2lb.web.system.dao.UserRoleMapper;
-import com.snail2lb.web.system.model.UserRole;
-import com.snail2lb.web.system.service.RoleService;
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.snail2lb.web.common.exception.ParameterException;
+import com.snail2lb.web.common.utils.UUIDUtil;
+import com.snail2lb.web.system.dao.RoleAuthoritiesMapper;
+import com.snail2lb.web.system.dao.RoleMapper;
+import com.snail2lb.web.system.dao.UserRoleMapper;
+import com.snail2lb.web.system.model.Role;
+import com.snail2lb.web.system.model.UserRole;
+import com.snail2lb.web.system.service.RoleService;
 
 @Service
 public class RoleServiceImpl implements RoleService {

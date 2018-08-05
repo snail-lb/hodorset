@@ -3,94 +3,35 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.wf</groupId>
-    <artifactId>easyweb</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <groupId>com.snail2lb</groupId>
+    <artifactId>hodorset</artifactId>
+    <version>1.0</version>
     <packaging>jar</packaging>
 
-    <name>EasyWeb</name>
-    <description>EasyWeb project for Spring Boot</description>
+    <name>HodorSet</name>
+    <description>数据可视化的一个项目</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.0.2.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
+        <echart.java.version>3.0.0.4</echart.java.version>
+        <mybatis.plus.version>2.3</mybatis.plus.version>
     </properties>
 
+    <modules>
+        <module>HodorSet-Echart</module>
+        <module>HodorSet-Web</module>
+    </modules>
+
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <!--web-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <!--数据库-->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>1.3.2</version>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
-            <version>1.1.9</version>
-        </dependency>
-
-        <!-- mybatis-plus -->
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>2.3</version>
-        </dependency>
-
-        <!-- redis -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
-
-        <!-- spring security -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-
-        <!-- oauth2 -->
-        <dependency>
-            <groupId>org.springframework.security.oauth</groupId>
-            <artifactId>spring-security-oauth2</artifactId>
-            <version>2.3.2.RELEASE</version>
-        </dependency>
-
-        <!-- swagger -->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>2.2.2</version>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>2.2.2</version>
-        </dependency>
 
         <!-- fastjson -->
         <dependency>
@@ -99,19 +40,11 @@
             <version>1.2.47</version>
         </dependency>
 
-        <!-- 从request获取设备信息-->
         <dependency>
-            <groupId>eu.bitwalker</groupId>
-            <artifactId>UserAgentUtils</artifactId>
-            <version>1.21</version>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
         </dependency>
 
-        <!-- 图形验证码 -->
-        <dependency>
-            <groupId>com.github.whvcse</groupId>
-            <artifactId>EasyCaptcha</artifactId>
-            <version>1.1.0</version>
-        </dependency>
 
         <!-- 热加载 -->
         <!--<dependency>
@@ -119,27 +52,6 @@
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
         </dependency>-->
-
-        <!--ECahrts-->
-        <dependency>
-            <groupId>com.github.abel533</groupId>
-            <artifactId>ECharts</artifactId>
-            <version>3.0.0.4</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.8.5</version>
-        </dependency>
-
-
     </dependencies>
 
     <!-- github上的一些开源项目都是有用的这个仓库 -->
