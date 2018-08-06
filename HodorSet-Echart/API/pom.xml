@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.snail2lb</groupId>
+        <artifactId>hodorset-echart</artifactId>
+        <version>1.0</version>
+    </parent>
+
+    <groupId>com.snail2lb</groupId>
+    <artifactId>API</artifactId>
+    <version>1.0</version>
+
+    <name>ECharts</name>
+    <description>
+        这是一个针对ECharts3.0版本的Java类库，实现了所有ECharts中的Json结构对应的Java对象，并且可以很方便的创建Option,Series等
+        由于com.github.abel533的Echarts中有一些缺少的字段，所以就这里直接把源码放在这个module,方便更改。
+    </description>
+    <url>https://github.com/abel533</url>
+
+    <licenses>
+        <license>
+            <name>The MIT License (MIT)</name>
+            <url>https://github.com/abel533/ECharts/blob/master/LICENSE</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>abel533</name>
+            <email>abel533@gmail.com</email>
+        </developer>
+    </developers>
+
+    <dependencies>
+        <!-- 可选依赖 -->
+        <!--GsonOption必须-->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+    </dependencies>
+
+
+</project>

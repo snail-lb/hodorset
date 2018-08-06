@@ -6,20 +6,21 @@
 
     <parent>
         <groupId>com.snail2lb</groupId>
-        <artifactId>hodorset</artifactId>
+        <artifactId>hodorset-echart</artifactId>
         <version>1.0</version>
     </parent>
 
     <groupId>com.snail2lb</groupId>
-    <artifactId>hodorset-echart</artifactId>
+    <artifactId>IMPL</artifactId>
     <version>1.0</version>
 
-    <modules>
-        <module>API</module>
-        <module>IMPL</module>
-    </modules>
-
     <dependencies>
+        <dependency>
+            <groupId>com.snail2lb</groupId>
+            <artifactId>API</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
+
     
 </project>
