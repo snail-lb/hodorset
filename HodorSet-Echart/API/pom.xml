@@ -11,7 +11,7 @@
     </parent>
 
     <groupId>com.snail2lb</groupId>
-    <artifactId>API</artifactId>
+    <artifactId>hodorset-echart-api</artifactId>
     <version>1.0</version>
 
     <name>ECharts</name>
@@ -34,21 +34,5 @@
             <email>abel533@gmail.com</email>
         </developer>
     </developers>
-
-    <dependencies>
-        <!-- 可选依赖 -->
-        <!--GsonOption必须-->
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.5</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-    </dependencies>
-
 
 </project>

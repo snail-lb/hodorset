@@ -11,15 +11,16 @@
     </parent>
 
     <groupId>com.snail2lb</groupId>
-    <artifactId>IMPL</artifactId>
+    <artifactId>hodorset-echart-impl</artifactId>
     <version>1.0</version>
 
     <dependencies>
         <dependency>
             <groupId>com.snail2lb</groupId>
-            <artifactId>API</artifactId>
+            <artifactId>hodorset-echart-api</artifactId>
             <version>1.0</version>
         </dependency>
+
     </dependencies>
 
     
