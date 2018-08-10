@@ -1,10 +1,13 @@
-package com.snail2lb.web.commons.api;
+package com.snail2lb.web.system.model;
 
 import java.util.Date;
 
-import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableName;
 
-public class LoginRecord {
+@TableName("sys_login_record")
+public class LoginRecordPO {
+    @TableId
     private String id;
 
     private String userId;
@@ -18,10 +21,6 @@ public class LoginRecord {
     private String ipAddress;
 
     private Date createTime;
-
-    private String nickName;
-
-    private String username;
 
     public String getId() {
         return id;
@@ -77,21 +76,5 @@ public class LoginRecord {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
-    }
-
-    public String getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 }

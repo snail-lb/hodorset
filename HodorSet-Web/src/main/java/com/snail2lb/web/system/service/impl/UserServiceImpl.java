@@ -12,6 +12,7 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.snail2lb.web.common.PageResult;
+import com.snail2lb.web.common.beans.BeanCopyUtil;
 import com.snail2lb.web.common.exception.BusinessException;
 import com.snail2lb.web.common.exception.ParameterException;
 import com.snail2lb.web.common.utils.StringUtil;
@@ -22,6 +23,8 @@ import com.snail2lb.web.commons.api.UserRole;
 import com.snail2lb.web.system.dao.RoleMapper;
 import com.snail2lb.web.system.dao.UserMapper;
 import com.snail2lb.web.system.dao.UserRoleMapper;
+import com.snail2lb.web.system.model.UserPO;
+import com.snail2lb.web.system.model.UserRolePO;
 import com.snail2lb.web.system.service.UserService;
 
 @Service
@@ -35,12 +38,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getByUsername(String username) {
-        return userMapper.getByUsername(username);
+        return po2Vo(userMapper.getByUsername(username));
     }
 
     @Override
     public PageResult<User> list(int pageNum, int pageSize, boolean showDelete, String column, String value) {
-        Wrapper<User> wrapper = new EntityWrapper<User>();
+        Wrapper<UserPO> wrapper = new EntityWrapper<UserPO>();
         if (StringUtil.isNotBlank(column)) {
             wrapper.like(column, value);
         }
@@ -48,13 +51,15 @@ public class UserServiceImpl implements UserService {
             wrapper.eq("state", 0);
         }
         Page<User> userPage = new Page<>(pageNum, pageSize);
-        List<User> userList = userMapper.selectPage(userPage, wrapper);
+        List<User> userList = new ArrayList<>();
+        userMapper.selectPage(userPage, wrapper).stream().forEach(userPO -> po2Vo(userPO));
         // 查询user的角色
         List<String> userIds = new ArrayList<>();
         for (User one : userList) {
             userIds.add(one.getUserId());
         }
-        List<Role> roles = roleMapper.selectList(null);
+        List<Role> roles = new ArrayList<>();
+        roleMapper.selectList(null).stream().forEach(rolePO -> roles.add(BeanCopyUtil.copyTo(rolePO, new Role())));
         List<UserRole> userRoles = userRoleMapper.selectList(new EntityWrapper().in("user_id", userIds));
         for (User one : userList) {
             List<Role> tempUrs = new ArrayList<>();
@@ -83,7 +88,7 @@ public class UserServiceImpl implements UserService {
         user.setCreateTime(date);
         user.setUpdateTime(date);
         try {
-            boolean rs = userMapper.insert(user) > 0;
+            boolean rs = userMapper.insert(vo2Po(user)) > 0;
             if (rs) {
                 addUserRole(userId, user.getRoles());
             }
@@ -96,7 +101,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean update(User user) {
-        boolean rs = userMapper.updateById(user) > 0;
+        boolean rs = userMapper.updateById(vo2Po(user)) > 0;
         if (rs) {
             userRoleMapper.delete(new EntityWrapper().eq("user_id", user.getUserId()));
             addUserRole(user.getUserId(), user.getRoles());
@@ -114,7 +119,7 @@ public class UserServiceImpl implements UserService {
             userRole.setUserId(userId);
             userRole.setRoleId(role.getRoleId());
             userRole.setCreateTime(new Date());
-            userRoleMapper.insert(userRole);
+            userRoleMapper.insert(BeanCopyUtil.copyTo(userRole, new UserRolePO()));
         }
     }
 
@@ -126,7 +131,7 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setUserId(userId);
         user.setState(state);
-        return userMapper.updateById(user) > 0;
+        return userMapper.updateById(vo2Po(user)) > 0;
     }
 
     @Override
@@ -135,16 +140,24 @@ public class UserServiceImpl implements UserService {
         user.setUserId(userId);
         String finalSecret = "{bcrypt}" + new BCryptPasswordEncoder().encode(password);
         user.setPassword(finalSecret);
-        return userMapper.updateById(user) > 0;
+        return userMapper.updateById(vo2Po(user)) > 0;
     }
 
     @Override
     public User getById(String userId) {
-        return userMapper.selectById(userId);
+        return po2Vo(userMapper.selectById(userId));
     }
 
     @Override
     public boolean delete(String userId) {
         return userMapper.deleteById(userId) > 0;
+    }
+
+    private UserPO vo2Po(User vo){
+        return BeanCopyUtil.copyTo(vo, new UserPO());
+    }
+
+    private User po2Vo(UserPO po){
+        return BeanCopyUtil.copyTo(po, new User());
     }
 }

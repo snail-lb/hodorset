@@ -8,11 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.snail2lb.web.common.beans.BeanCopyUtil;
 import com.snail2lb.web.common.utils.UUIDUtil;
 import com.snail2lb.web.commons.api.Authorities;
 import com.snail2lb.web.commons.api.RoleAuthorities;
 import com.snail2lb.web.system.dao.AuthoritiesMapper;
 import com.snail2lb.web.system.dao.RoleAuthoritiesMapper;
+import com.snail2lb.web.system.model.AuthoritiesPO;
+import com.snail2lb.web.system.model.RoleAuthoritiesPO;
 import com.snail2lb.web.system.service.AuthoritiesService;
 
 @Service
@@ -29,7 +32,9 @@ public class AuthoritiesServiceImpl implements AuthoritiesService {
 
     @Override
     public List<Authorities> list() {
-        return authoritiesMapper.selectList(null);
+        List<Authorities> authoritiesList = new ArrayList<>();
+        authoritiesMapper.selectList(null).stream().forEach(po -> authoritiesList.add(po2Vo(po)));
+        return authoritiesList;
     }
 
     @Override
@@ -52,7 +57,7 @@ public class AuthoritiesServiceImpl implements AuthoritiesService {
     @Override
     public boolean add(Authorities authorities) {
         authorities.setCreateTime(new Date());
-        return authoritiesMapper.insert(authorities) > 0;
+        return authoritiesMapper.insert(vo2Po(authorities)) > 0;
     }
 
     @Override
@@ -60,7 +65,7 @@ public class AuthoritiesServiceImpl implements AuthoritiesService {
         authoritiesMapper.delete(null);
         for (Authorities one : authorities) {
             one.setCreateTime(new Date());
-            authoritiesMapper.insert(one);
+            authoritiesMapper.insert(vo2Po(one));
         }
         roleAuthoritiesMapper.deleteTrash();
         return true;
@@ -73,12 +78,20 @@ public class AuthoritiesServiceImpl implements AuthoritiesService {
         roleAuthorities.setRoleId(roleId);
         roleAuthorities.setAuthority(authId);
         roleAuthorities.setCreateTime(new Date());
-        return roleAuthoritiesMapper.insert(roleAuthorities) > 0;
+        RoleAuthoritiesPO po = BeanCopyUtil.copyTo(roleAuthorities, new RoleAuthoritiesPO());
+        return roleAuthoritiesMapper.insert(po) > 0;
     }
 
     @Override
     public boolean deleteRoleAuth(String roleId, String authId) {
-        return roleAuthoritiesMapper.delete(new EntityWrapper<RoleAuthorities>().eq("role_id", roleId).eq("authority", authId)) > 0;
+        return roleAuthoritiesMapper.delete(new EntityWrapper<RoleAuthoritiesPO>().eq("role_id", roleId).eq("authority", authId)) > 0;
     }
 
+    private AuthoritiesPO vo2Po(Authorities vo){
+        return BeanCopyUtil.copyTo(vo, new AuthoritiesPO());
+    }
+
+    private Authorities po2Vo(AuthoritiesPO po){
+        return BeanCopyUtil.copyTo(po, new Authorities());
+    }
 }

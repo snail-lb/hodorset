@@ -1,12 +1,13 @@
-package com.snail2lb.web.commons.api;
+package com.snail2lb.web.system.model;
 
 import java.util.Date;
 
-import org.springframework.security.core.GrantedAuthority;
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableName;
 
-public class Authorities implements GrantedAuthority {
-    private static final long serialVersionUID = -6058060376656180793L;
-
+@TableName("sys_authorities")
+public class AuthoritiesPO{
+    @TableId
     private String authority;
 
     private String authorityName;
@@ -33,8 +34,4 @@ public class Authorities implements GrantedAuthority {
         this.createTime = createTime;
     }
 
-    @Override
-    public String getAuthority() {
-        return this.authority;
-    }
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.snail2lb.web.common.beans.BeanCopyUtil;
 import com.snail2lb.web.common.exception.ParameterException;
 import com.snail2lb.web.common.utils.UUIDUtil;
 import com.snail2lb.web.commons.api.Role;
@@ -15,6 +16,8 @@ import com.snail2lb.web.commons.api.UserRole;
 import com.snail2lb.web.system.dao.RoleAuthoritiesMapper;
 import com.snail2lb.web.system.dao.RoleMapper;
 import com.snail2lb.web.system.dao.UserRoleMapper;
+import com.snail2lb.web.system.model.LoginRecordPO;
+import com.snail2lb.web.system.model.RolePO;
 import com.snail2lb.web.system.service.RoleService;
 
 @Service
@@ -49,12 +52,12 @@ public class RoleServiceImpl implements RoleService {
     public boolean add(Role role) {
         role.setRoleId(UUIDUtil.randomUUID8());
         role.setCreateTime(new Date());
-        return roleMapper.insert(role) > 0;
+        return roleMapper.insert(vo2Po(role)) > 0;
     }
 
     @Override
     public boolean update(Role role) {
-        return roleMapper.updateById(role) > 0;
+        return roleMapper.updateById(vo2Po(role)) > 0;
     }
 
     @Override
@@ -65,7 +68,7 @@ public class RoleServiceImpl implements RoleService {
         Role role = new Role();
         role.setRoleId(roleId);
         role.setIsDelete(isDelete);
-        boolean rs = roleMapper.updateById(role) > 0;
+        boolean rs = roleMapper.updateById(vo2Po(role)) > 0;
         if (rs) {  //删除角色的权限
             roleAuthoritiesMapper.delete(new EntityWrapper().eq("role_id", roleId));
         }
@@ -74,11 +77,19 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Role getById(String roleId) {
-        return roleMapper.selectById(roleId);
+        return po2Vo(roleMapper.selectById(roleId));
     }
 
     @Override
     public boolean delete(String roleId) {
         return roleMapper.deleteById(roleId) > 0;
+    }
+
+    private RolePO vo2Po(Role vo){
+        return BeanCopyUtil.copyTo(vo, new RolePO());
+    }
+
+    private Role po2Vo(RolePO po){
+        return BeanCopyUtil.copyTo(po, new Role());
     }
 }

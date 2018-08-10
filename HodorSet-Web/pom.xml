@@ -22,12 +22,10 @@
             <scope>test</scope>
         </dependency>
 
-        <!--<dependency>
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-        </dependency>-->
-
-
+        </dependency>
 
         <!-- redis -->
         <dependency>
@@ -48,28 +46,18 @@
             <version>2.3.2.RELEASE</version>
         </dependency>
 
-        <!-- 从request获取设备信息-->
-        <dependency>
-            <groupId>eu.bitwalker</groupId>
-            <artifactId>UserAgentUtils</artifactId>
-            <version>1.21</version>
-        </dependency>
-
         <!-- 图形验证码 -->
-        <dependency>
+        <!--<dependency>
             <groupId>com.github.whvcse</groupId>
             <artifactId>EasyCaptcha</artifactId>
             <version>1.1.0</version>
-        </dependency>
+        </dependency>-->
+
         <dependency>
             <groupId>com.snail2lb</groupId>
             <artifactId>hodorset-echart-impl</artifactId>
             <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.snail2lb</groupId>
-            <artifactId>hodorset-commons</artifactId>
-            <version>1.0</version>
+            <scope>compile</scope>
         </dependency>
 
     </dependencies>

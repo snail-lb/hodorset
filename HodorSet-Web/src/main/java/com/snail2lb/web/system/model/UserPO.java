@@ -1,15 +1,15 @@
-package com.snail2lb.web.commons.api;
+package com.snail2lb.web.system.model;
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableName;
 
-public class User implements UserDetails {
-    private static final long serialVersionUID = 242146703513492331L;
-
+@TableName("sys_user")
+public class UserPO {
+    @TableId
     private String userId;
 
     private String username;
@@ -36,9 +36,11 @@ public class User implements UserDetails {
 
     private Date updateTime;
 
-    private List<Authorities> authorities;  //权限
+    @TableField(exist = false)
+    private List<AuthoritiesPO> authorities;  //权限
 
-    private List<Role> roles;  //角色
+    @TableField(exist = false)
+    private List<RolePO> roles;  //角色
 
     public String getUserId() {
         return userId;
@@ -136,50 +138,15 @@ public class User implements UserDetails {
         this.updateTime = updateTime;
     }
 
-    public void setAuthorities(List<Authorities> authorities) {
+    public void setAuthorities(List<AuthoritiesPO> authorities) {
         this.authorities = authorities;
     }
 
-    public List<Role> getRoles() {
+    public List<RolePO> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
+    public void setRoles(List<RolePO> roles) {
         this.roles = roles;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.authorities;
-    }
-
-    @Override
-    public String getPassword() {
-        return this.password;
-    }
-
-    @Override
-    public String getUsername() {
-        return this.username;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;  //账户是否未过期
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return this.state != 1;  //账户是否未锁定
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;  //凭证(密码)是否未过期
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;  //用户是否启用
     }
 }

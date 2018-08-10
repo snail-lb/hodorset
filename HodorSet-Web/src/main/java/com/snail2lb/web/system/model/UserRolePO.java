@@ -1,8 +1,13 @@
-package com.snail2lb.web.commons.api;
+package com.snail2lb.web.system.model;
 
 import java.util.Date;
 
-public class UserRole {
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableName;
+
+@TableName("sys_user_role")
+public class UserRolePO {
+    @TableId
     private String id;
 
     private String userId;
