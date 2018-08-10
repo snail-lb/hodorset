@@ -1,16 +1,16 @@
 package com.snail2lb.web.system.service.impl;
 
-import com.baomidou.mybatisplus.plugins.Page;
-import com.snail2lb.web.common.PageResult;
-import com.snail2lb.web.common.utils.UUIDUtil;
-import com.snail2lb.web.system.dao.LoginRecordMapper;
-import com.snail2lb.web.system.model.LoginRecord;
-import com.snail2lb.web.system.service.LoginRecordService;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.snail2lb.web.common.PageResult;
+import com.snail2lb.web.common.utils.UUIDUtil;
+import com.snail2lb.web.commons.api.LoginRecord;
+import com.snail2lb.web.system.dao.LoginRecordMapper;
+import com.snail2lb.web.system.service.LoginRecordService;
 
 @Service
 public class LoginRecordServiceImpl implements LoginRecordService {

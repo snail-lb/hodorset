@@ -3,7 +3,7 @@ package com.snail2lb.web.system.service;
 import com.snail2lb.web.common.PageResult;
 import com.snail2lb.web.common.exception.BusinessException;
 import com.snail2lb.web.common.exception.ParameterException;
-import com.snail2lb.web.system.model.User;
+import com.snail2lb.web.commons.api.User;
 
 public interface UserService {
 

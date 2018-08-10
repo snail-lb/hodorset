@@ -1,18 +1,19 @@
 package com.snail2lb.web.system.controller;
 
-import com.snail2lb.web.system.model.LoginRecord;
-import com.snail2lb.web.common.PageResult;
-import com.snail2lb.web.common.utils.StringUtil;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.snail2lb.web.common.PageResult;
+import com.snail2lb.web.common.utils.StringUtil;
+import com.snail2lb.web.commons.api.LoginRecord;
 import com.snail2lb.web.system.service.LoginRecordService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 
 @Api(value = "登录日志相关的接口", tags = "loginRecord")
 @RestController

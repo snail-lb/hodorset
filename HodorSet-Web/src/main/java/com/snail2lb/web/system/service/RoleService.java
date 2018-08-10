@@ -1,8 +1,8 @@
 package com.snail2lb.web.system.service;
 
-import com.snail2lb.web.system.model.Role;
-
 import java.util.List;
+
+import com.snail2lb.web.commons.api.Role;
 
 public interface RoleService {
 

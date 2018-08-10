@@ -1,18 +1,19 @@
 package com.snail2lb.web.system.service.impl;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.snail2lb.web.common.utils.UUIDUtil;
-import com.snail2lb.web.system.dao.AuthoritiesMapper;
-import com.snail2lb.web.system.dao.RoleAuthoritiesMapper;
-import com.snail2lb.web.system.model.Authorities;
-import com.snail2lb.web.system.model.RoleAuthorities;
-import com.snail2lb.web.system.service.AuthoritiesService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.snail2lb.web.common.utils.UUIDUtil;
+import com.snail2lb.web.commons.api.Authorities;
+import com.snail2lb.web.commons.api.RoleAuthorities;
+import com.snail2lb.web.system.dao.AuthoritiesMapper;
+import com.snail2lb.web.system.dao.RoleAuthoritiesMapper;
+import com.snail2lb.web.system.service.AuthoritiesService;
 
 @Service
 public class AuthoritiesServiceImpl implements AuthoritiesService {

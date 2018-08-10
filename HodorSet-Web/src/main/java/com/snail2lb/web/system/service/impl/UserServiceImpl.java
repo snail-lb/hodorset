@@ -1,5 +1,13 @@
 package com.snail2lb.web.system.service.impl;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
@@ -8,21 +16,13 @@ import com.snail2lb.web.common.exception.BusinessException;
 import com.snail2lb.web.common.exception.ParameterException;
 import com.snail2lb.web.common.utils.StringUtil;
 import com.snail2lb.web.common.utils.UUIDUtil;
+import com.snail2lb.web.commons.api.Role;
+import com.snail2lb.web.commons.api.User;
+import com.snail2lb.web.commons.api.UserRole;
 import com.snail2lb.web.system.dao.RoleMapper;
 import com.snail2lb.web.system.dao.UserMapper;
 import com.snail2lb.web.system.dao.UserRoleMapper;
-import com.snail2lb.web.system.model.Role;
-import com.snail2lb.web.system.model.User;
 import com.snail2lb.web.system.service.UserService;
-import com.snail2lb.web.system.model.UserRole;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {

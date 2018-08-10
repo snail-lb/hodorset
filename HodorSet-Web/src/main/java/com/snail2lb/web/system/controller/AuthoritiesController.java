@@ -18,7 +18,7 @@ import com.snail2lb.web.common.BaseController;
 import com.snail2lb.web.common.JsonResult;
 import com.snail2lb.web.common.PageResult;
 import com.snail2lb.web.common.utils.ReflectUtil;
-import com.snail2lb.web.system.model.Authorities;
+import com.snail2lb.web.commons.api.Authorities;
 import com.snail2lb.web.system.service.AuthoritiesService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;

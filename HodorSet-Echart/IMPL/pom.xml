@@ -12,15 +12,21 @@
 
     <groupId>com.snail2lb</groupId>
     <artifactId>hodorset-echart-impl</artifactId>
-    <version>1.0</version>
+    <version>${hodorset.version}</version>
+    <packaging>jar</packaging>
 
     <dependencies>
+
+        <dependency>
+            <groupId>com.github.abel533</groupId>
+            <artifactId>ECharts</artifactId>
+            <version>3.0.0.5</version>
+        </dependency>
         <dependency>
             <groupId>com.snail2lb</groupId>
-            <artifactId>hodorset-echart-api</artifactId>
-            <version>1.0</version>
+            <artifactId>hodorset-commons-impl</artifactId>
+            <version>${hodorset.version}</version>
         </dependency>
-
     </dependencies>
 
     

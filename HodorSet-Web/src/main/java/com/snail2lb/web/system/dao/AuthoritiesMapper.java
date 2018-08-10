@@ -5,7 +5,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
-import com.snail2lb.web.system.model.Authorities;
+import com.snail2lb.web.commons.api.Authorities;
+
 
 public interface AuthoritiesMapper extends BaseMapper<Authorities> {
 

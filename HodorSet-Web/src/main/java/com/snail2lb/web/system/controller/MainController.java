@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.snail2lb.web.common.BaseController;
 import com.snail2lb.web.common.JsonResult;
-import com.snail2lb.web.system.model.Role;
-import com.snail2lb.web.system.model.User;
+import com.snail2lb.web.commons.api.Role;
+import com.snail2lb.web.commons.api.User;
 import com.snail2lb.web.system.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;

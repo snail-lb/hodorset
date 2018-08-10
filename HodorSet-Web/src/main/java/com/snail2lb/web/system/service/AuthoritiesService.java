@@ -1,8 +1,9 @@
 package com.snail2lb.web.system.service;
 
-import com.snail2lb.web.system.model.Authorities;
 
 import java.util.List;
+
+import com.snail2lb.web.commons.api.Authorities;
 
 public interface AuthoritiesService {
 

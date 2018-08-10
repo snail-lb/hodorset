@@ -10,11 +10,11 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.snail2lb.web.common.exception.ParameterException;
 import com.snail2lb.web.common.utils.UUIDUtil;
+import com.snail2lb.web.commons.api.Role;
+import com.snail2lb.web.commons.api.UserRole;
 import com.snail2lb.web.system.dao.RoleAuthoritiesMapper;
 import com.snail2lb.web.system.dao.RoleMapper;
 import com.snail2lb.web.system.dao.UserRoleMapper;
-import com.snail2lb.web.system.model.Role;
-import com.snail2lb.web.system.model.UserRole;
 import com.snail2lb.web.system.service.RoleService;
 
 @Service
