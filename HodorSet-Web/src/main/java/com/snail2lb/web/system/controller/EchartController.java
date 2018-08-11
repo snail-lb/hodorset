@@ -112,7 +112,7 @@ public class EchartController {
             option = PieChartUtil.doughnutChartPie("浏览器市场份额", map);
         }else if("roseDiagramChartPie".equals(type)){
             Map<String,Number> map = ImmutableMap.of("IE9",21,"Google",22,"Firefox",34,"IE8",36);
-            String result = PieChartUtil.roseDiagramChartPie("浏览器市场份额", map);
+            option = PieChartUtil.roseDiagramChartPie("浏览器市场份额", map);
         }else if("rectangularEchartPie".equals(type)){
             Map<String,Number> map = ImmutableMap.of("IE9",21,"Google",22,"Firefox",34,"IE8",36);
             option = PieChartUtil.rectangularEchartPie("浏览器市场份额", map);

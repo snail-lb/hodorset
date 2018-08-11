@@ -9,115 +9,68 @@
     <div class="layui-card-body">
 
         <blockquote class="layui-card-body layui-elem-quote">
-            电视收视率统计
+            Echart默认图表展示
         </blockquote>
 
         <!--使用布局来显示图表-->
         <div class="layui-card-body layui-fluid">
-            <div class="layui-row layui-col-space10">
-                <div class="layui-col-md4">
+            <div class="layui-row layui-col-space10" id="echart-row">
+            <!--<div class="layui-col-md4">
                     <div class="layui-bg-gray" style="height:400px;" id="mode1"></div>
-                </div>
-                <div class="layui-col-md4">
-                    <div class="layui-bg-gray" style="height:400px;" id="mode2"></div>
-                </div>
-                <div class="layui-col-md4">
-                    <div class="layui-bg-gray" style="height:400px;" id="mode3"></div>
-                </div>
-                <div class="layui-col-md4">
-                    <div class="layui-bg-gray" style="height:400px;" id="mode4"></div>
-                </div>
-                <div class="layui-col-md4">
-                    <div class="layui-bg-gray" style="height:400px;" id="mode5"></div>
-                </div>
-                <div class="layui-col-md4">
-                    <div class="layui-bg-gray" style="height:400px;" id="mode6"></div>
-                </div>
+                </div>  -->
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    var option = {
-        title: {
-            text: '折线图'
-        },
-        tooltip: {
-            trigger: 'axis'
-        },
-        legend: {
-            data:['邮件营销','联盟广告','视频广告','直接访问']
-        },
-        grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            containLabel: true
-        },
-        toolbox: {
-            feature: {
-                saveAsImage: {}
-            }
-        },
-        xAxis: {
-            type: 'category',
-            boundaryGap: false,
-            data: ['周一','周二','周三','周四','周五','周六','周日']
-        },
-        yAxis: {
-            type: 'value'
-        },
-        series: [
-            {
-                name:'邮件营销',
-                type:'line',
-                stack: '总量',
-                data:[120, 132, 101, 134, 90, 230, 210]
-            },
-            {
-                name:'联盟广告',
-                type:'line',
-                stack: '总量',
-                data:[220, 182, 191, 234, 290, 330, 310]
-            },
-            {
-                name:'视频广告',
-                type:'line',
-                stack: '总量',
-                data:[150, 232, 201, 154, 190, 330, 410]
-            },
-            {
-                name:'直接访问',
-                type:'line',
-                stack: '总量',
-                data:[320, 332, 301, 334, 390, 330, 320]
-            }
-        ]
-    };
-
-    layui.use(['echarts', 'jquery', 'element'], function () {
-        //var echarts = layui.echarts;
+    layui.use(['echarts', 'jquery', 'element','admin','config'], function () {
+        var echarts = layui.echarts;
         var $ = layui.jquery;
         var element = layui.element;
+        var admin = layui.admin;
+        var config = layui.config;
 
-        var echarts1 = layui.echarts.init($('#mode1')[0]);
-        echarts1.setOption(option);
+        var type = ["simpleEchartBar",
+            "transverseEchartBar",
+            "simpleChartFunnel",
+            "simpleGaugeChart",
+            "basicLineChart",
+            "basicAreaChart",
+            "smoothedLineChart",
+            "stackedAreaChart",
+            "simpleChartPie",
+            "radiusChartPiepie",
+            "doughnutChartPie",
+            "roseDiagramChartPie",
+            "rectangularEchartPie"];
 
-        var echarts2 = layui.echarts.init($('#mode2')[0]);
-        echarts2.setOption(option);
 
-        var echarts3 = layui.echarts.init($('#mode3')[0]);
-        echarts3.setOption(option);
+        $echart = $('#echart-row');
+        for(var i = 0,len = type.length; i < len; i++){
+            var model_id = 'model_' + i;
+            $echart.append("<div class=\"layui-col-md4\">\n" +
+                "<div class=\"layui-bg-gray\" style=\"height:400px;\" id=\""+model_id+"\"></div>\n" +
+                "</div>");
+        }
 
-        var echarts4 = layui.echarts.init($('#mode4')[0]);
-        echarts4.setOption(option);
-
-        var echarts5 = layui.echarts.init($('#mode5')[0]);
-        echarts5.setOption(option);
-
-        var echarts6 = layui.echarts.init($('#mode6')[0]);
-        echarts6.setOption(option);
-
+        var arr = new Array();
+        for(var i = 0,len = type.length; i < len; i++){
+            var url = 'echart/' + type[i];
+            var ele =$('#model_' + i)[0];
+            arr[i] = echarts.init(ele);
+            //获取默认的图形
+            $.ajax({
+                url: config.base_server + url,
+                dataType: 'json',
+                type: 'GET',
+                success: function(j) {
+                    return function(data){
+                        var option_data = JSON.parse(data.msg);
+                        arr[j].setOption(option_data);
+                    }
+                }(i)
+            });
+        }
     });
 </script>
