@@ -50,8 +50,16 @@ public class UserPO {
         this.userId = userId;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public void setPassword(String password) {
@@ -136,6 +144,10 @@ public class UserPO {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public List<AuthoritiesPO> getAuthorities() {
+        return authorities;
     }
 
     public void setAuthorities(List<AuthoritiesPO> authorities) {

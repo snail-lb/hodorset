@@ -23,6 +23,17 @@
             <version>3.0.0.5</version>
         </dependency>
         <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.18</version>
+        </dependency>
+        <dependency>
             <groupId>com.snail2lb</groupId>
             <artifactId>hodorset-commons-impl</artifactId>
             <version>${hodorset.version}</version>

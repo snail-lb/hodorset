@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
         }
         Page<User> userPage = new Page<>(pageNum, pageSize);
         List<User> userList = new ArrayList<>();
-        userMapper.selectPage(userPage, wrapper).stream().forEach(userPO -> po2Vo(userPO));
+        userMapper.selectPage(userPage, wrapper).stream().forEach(userPO ->userList.add(po2Vo(userPO)));
         // 查询user的角色
         List<String> userIds = new ArrayList<>();
         for (User one : userList) {
@@ -60,7 +60,8 @@ public class UserServiceImpl implements UserService {
         }
         List<Role> roles = new ArrayList<>();
         roleMapper.selectList(null).stream().forEach(rolePO -> roles.add(BeanCopyUtil.copyTo(rolePO, new Role())));
-        List<UserRole> userRoles = userRoleMapper.selectList(new EntityWrapper().in("user_id", userIds));
+        List<UserRole> userRoles = new ArrayList<>();
+        userRoleMapper.selectList(new EntityWrapper().in("user_id", userIds)).stream().forEach(userRolePO -> userRoles.add(BeanCopyUtil.copyTo(userRolePO, new UserRole())));
         for (User one : userList) {
             List<Role> tempUrs = new ArrayList<>();
             for (UserRole ur : userRoles) {

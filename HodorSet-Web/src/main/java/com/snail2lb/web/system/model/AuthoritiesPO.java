@@ -14,6 +14,10 @@ public class AuthoritiesPO{
 
     private Date createTime;
 
+    public String getAuthority() {
+        return authority;
+    }
+
     public void setAuthority(String authority) {
         this.authority = authority;
     }
@@ -33,5 +37,4 @@ public class AuthoritiesPO{
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
-
 }

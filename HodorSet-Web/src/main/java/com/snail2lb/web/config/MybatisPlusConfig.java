@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
  */
 @EnableTransactionManagement
 @Configuration
-@MapperScan("com.snail2lb.web.*.dao")
+@MapperScan("com.snail2lb.web.**.dao")
 public class MybatisPlusConfig {
 
     /**
