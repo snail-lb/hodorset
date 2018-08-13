@@ -1,8 +1,13 @@
-package com.snail2lb.web.system.controller;
+package com.snail2lb.web.echart.controller;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.snail2lb.web.common.JsonResult;
+import com.snail2lb.web.echart.api.EchartModel;
 import com.snail2lb.web.echart.util.bar.BarChartUtil;
 import com.snail2lb.web.echart.util.funnel.FunnelChartUtil;
 import com.snail2lb.web.echart.util.gauge.GaugeChartUtil;
@@ -31,6 +37,8 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping("/echart")
 public class EchartController {
+
+    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ISO_LOCAL_TIME;
 
     @ApiOperation(value = "获取图表基础结构", notes = " 获取图表基础结构")
     //@ApiImplicitParam(name = "type", value = "图表类型", paramType="path", required = true, dataType = "String")
@@ -118,5 +126,60 @@ public class EchartController {
             option = PieChartUtil.rectangularEchartPie("浏览器市场份额", map);
         }
         return JsonResult.ok(option);
+    }
+
+
+    @ApiOperation(value = "获取指定的表格结构", notes = " 获取指定的表格结构")
+    @RequestMapping(value = "/echart/{group}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public JsonResult echart(@PathVariable String group) {
+
+        List<Object> list1 = Lists.newArrayList(11, 11, 15, 13, 12, 13, 10);
+        List<Object> list2 = Lists.newArrayList(1, 4, 2, 5, 3, 2, 0);
+        List<List<Object>> series = Lists.newArrayList(list1, list2);
+
+
+        String option = BarChartUtil.simpleEchartBar("未来一周气温变化",
+                Lists.newArrayList("周一", "周二", "周三", "周四", "周五", "周六", "周日"),
+                Lists.newArrayList("最高气温", "最低气温"),
+                series);
+        EchartModel echartModel = new EchartModel();
+        echartModel.setId(12345);
+        echartModel.setName("test");
+        echartModel.setOption(option);
+
+
+        List<EchartModel> echartModels = new ArrayList<>();
+        echartModels.add(echartModel);
+
+        return JsonResult.ok().put("echartModels", echartModels);
+    }
+
+
+
+    List<String> cateList = new ArrayList<>(10);
+    List<Integer> dataList = new ArrayList<>(10);
+
+
+    @ApiOperation(value = "获取动态数据", notes = " 获取动态数据")
+    @RequestMapping(value = "/news/new", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public JsonResult getNews() {
+        String time = dateTimeFormatter.format(LocalTime.now().withNano(0));
+        Integer value = RandomUtils.nextInt(0, 100);
+
+        if(cateList.size() < 10){
+            cateList.add(time);
+            dataList.add(value);
+        }else{
+            cateList.remove(0);
+            dataList.remove(0);
+            cateList.add(time);
+            dataList.add(value);
+        }
+
+        Map<String,Object> data = new HashMap<>();
+        data.put("categories", cateList);
+        data.put("data", dataList);
+
+        return JsonResult.ok().put("msg",data);
     }
 }

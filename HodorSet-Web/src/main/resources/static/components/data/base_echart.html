@@ -1,0 +1,49 @@
+<div class="layui-col-md4">
+    <div class="layui-bg-gray" style="height:400px;" id="default_model">
+    </div>
+</div>
+
+<script>
+/**1.获取默认的图形数据结构（如果设置过获取设置好的数据结构）
+ * 2.获取图形的数据并实时设置
+ * 3.通过界面能够调整大小？高
+ * 4.能够直接设置echart的图形数据结构
+ * 5.动态删除图形的结构
+ * **/
+
+layui.use(['echarts', 'jquery', 'element','admin','config'], function () {
+    var echarts = layui.echarts;
+    var $ = layui.jquery;
+    var element = layui.element;
+    var admin = layui.admin;
+    var config = layui.config;
+
+
+    admin.req("/echart/test",{},function (data) {
+        var id = data.echartModel.id;
+        var name = data.echartModel.name;
+        var option = data.echartModel.option;
+        var option_data = JSON.parse(option);
+        $('#default_model').setAttribute("id", id);
+        var ele = $('#' + id)[0];
+        var echart_init = echarts.init(ele);
+        echart_init.setOption(option_data);
+    },"GET");
+
+    //获取默认的图形
+    $.ajax({
+        url: config.base_server + "/echart/test",
+        dataType: 'json',
+        type: 'GET',
+        success: function(j) {
+            return function(data){
+                var option_data = JSON.parse(data.msg);
+                arr[j].setOption(option_data);
+            }
+        }(i)
+    });
+
+
+});
+
+</script>>

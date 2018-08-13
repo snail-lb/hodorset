@@ -6,18 +6,13 @@
 
     <parent>
         <groupId>com.snail2lb</groupId>
-        <artifactId>hodorset</artifactId>
+        <artifactId>hodorset-echart</artifactId>
         <version>1.0</version>
     </parent>
 
     <groupId>com.snail2lb</groupId>
-    <artifactId>hodorset-echart</artifactId>
+    <artifactId>hodorset-echart-api</artifactId>
     <version>${hodorset.version}</version>
-    <packaging>pom</packaging>
 
-    <modules>
-        <module>API</module>
-        <module>IMPL</module>
-    </modules>
-
+    
 </project>

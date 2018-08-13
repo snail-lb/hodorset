@@ -15,9 +15,20 @@
         <!--使用布局来显示图表-->
         <div class="layui-card-body layui-fluid">
             <div class="layui-row layui-col-space10" id="echart-row">
-            <!--<div class="layui-col-md4">
+
+                <!--
+                <div class="layui-col-md4"><div class="layui-bg-gray" style="height:400px;" id="mode1"></div></div>
+                -->
+                <div class="layui-col-md9 layui-col-md-offset3">
                     <div class="layui-bg-gray" style="height:400px;" id="mode1"></div>
-                </div>  -->
+                </div>
+                <div class="layui-col-md4">
+                    <div class="layui-bg-gray" style="height:400px;" id="mode2"></div>
+                </div>
+                <div class="layui-col-md4">
+                    <div class="layui-bg-gray" style="height:400px;" id="mode3"></div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -49,9 +60,11 @@
         $echart = $('#echart-row');
         for(var i = 0,len = type.length; i < len; i++){
             var model_id = 'model_' + i;
-            $echart.append("<div class=\"layui-col-md4\">\n" +
+            /*$echart.append("<div class=\"layui-col-md4\">\n" +
                 "<div class=\"layui-bg-gray\" style=\"height:400px;\" id=\""+model_id+"\"></div>\n" +
-                "</div>");
+                "</div>");*/
+
+            $echart.append('<div class="layui-col-md4"><div class="layui-bg-gray" style="height:400px;" id="'+model_id+'"></div></div>');
         }
 
         var arr = new Array();
@@ -72,5 +85,57 @@
                 }(i)
             });
         }
+
+
+        $echart.append('<div class="layui-col-md4"><div class="layui-bg-gray" style="height:400px;" id="model-test"></div></div>');
+        var myChart = echarts.init(document.getElementById('model-test'));
+        // 显示标题，图例和空的坐标轴
+        myChart.setOption({
+            title: {
+                text: '异步数据加载示例'
+            },
+            tooltip: {},
+            legend: {
+                data:['销量']
+            },
+            xAxis: {
+                type: 'category',
+                data: []
+            },
+            yAxis: {type: 'value'},
+            series: [{
+                name: '销量',
+                type: 'line',
+                data: []
+            }]
+        });
+
+        setInterval(
+            function getOptionData(){
+                $.ajax({
+                    url: config.base_server + 'echart/news/new',
+                    type:'GET',
+                    success: function (result) {
+                        console.log(result);
+                        //var option_data = JSON.parse(result.msg);
+                        var option_data = result.msg;
+                        // 填入数据
+                        myChart.setOption({
+                            xAxis: {
+                                data: option_data.categories
+                            },
+                            series: [{
+                                // 根据名字对应到相应的系列
+                                name: '销量',
+                                data: option_data.data
+                            }]
+                        });
+                    }
+                })
+        },1000);
+        /*$(function(){
+            setInterval('getOptionData()', 1000);  //定时每秒启用update更新数据
+        });*/
+
     });
 </script>

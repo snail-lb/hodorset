@@ -38,6 +38,12 @@
             <artifactId>hodorset-commons-impl</artifactId>
             <version>${hodorset.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.snail2lb</groupId>
+            <artifactId>hodorset-echart-api</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     
