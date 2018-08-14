@@ -2,6 +2,7 @@ package com.snail2lb.web.echart.service;
 
 import java.util.List;
 
+import com.snail2lb.web.common.PageResult;
 import com.snail2lb.web.echart.api.CustomOption;
 
 /**
@@ -23,4 +24,6 @@ public interface CustomOptionService {
     boolean deleteById(Integer id);
 
     List<CustomOption> selectByType(String type);
+
+    PageResult<CustomOption> selectAllPage(Integer pageNum, Integer pageSize);
 }

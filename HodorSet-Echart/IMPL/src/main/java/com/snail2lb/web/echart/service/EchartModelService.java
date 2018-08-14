@@ -14,7 +14,9 @@ public interface EchartModelService {
 
     EchartModel selectById(Integer id);
 
-    List<EchartModel> list();
+    List<EchartModel> selectAll();
+
+    List<EchartModel> slectByGroup(String group);
 
     boolean add(EchartModel echartModel);
 

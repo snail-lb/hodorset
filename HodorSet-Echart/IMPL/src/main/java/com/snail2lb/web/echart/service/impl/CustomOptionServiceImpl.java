@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.snail2lb.web.common.PageResult;
 import com.snail2lb.web.common.beans.BeanCopyUtil;
+import com.snail2lb.web.common.exception.BusinessException;
 import com.snail2lb.web.echart.api.CustomOption;
 import com.snail2lb.web.echart.dao.CustomOptionMapper;
 import com.snail2lb.web.echart.model.CustomOptionPO;
@@ -46,6 +49,9 @@ public class CustomOptionServiceImpl implements CustomOptionService {
 
     @Override
     public boolean update(CustomOption customOption) {
+        if(null == customOption.getId()){
+            throw new BusinessException("修改数据必须带有id参数");
+        }
         return customOptionMapper.updateById(vo2Po(customOption)) > 0;
     }
 
@@ -60,6 +66,15 @@ public class CustomOptionServiceImpl implements CustomOptionService {
         customOptionMapper.selectList(new EntityWrapper<CustomOptionPO>().where("type={0}",type))
                 .forEach(customOptionPO -> customOptions.add(po2Vo(customOptionPO)));
         return customOptions;
+    }
+
+    @Override
+    public PageResult<CustomOption> selectAllPage(Integer pageNum, Integer pageSize) {
+        Page<CustomOption> page = new Page<>(pageNum, pageSize);
+        List<CustomOption> options = new ArrayList<>();
+        customOptionMapper.selectPage(page, null).stream().forEach(po ->options.add(po2Vo(po)));
+        PageResult<CustomOption> result = new PageResult<>(options);
+        return result;
     }
 
     private CustomOptionPO vo2Po(CustomOption vo){
