@@ -43,7 +43,7 @@ public class EchartModelServiceImpl implements EchartModelService {
     public List<EchartModel> slectByGroup(String group) {
         List<EchartModel> echartModels = new ArrayList<>();
         Wrapper<EchartModelPO> wrapper = new EntityWrapper<EchartModelPO>();
-        wrapper.eq("group", group);
+        wrapper.eq("`group`", group);
         echartModelMapper.selectList(wrapper)
                 .forEach(echartModelPO -> echartModels.add(po2Vo(echartModelPO)));
         return echartModels;

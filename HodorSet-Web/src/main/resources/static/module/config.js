@@ -62,13 +62,17 @@ layui.define(function (exports) {
                 name: '数据分析',
                 icon: 'layui-icon-chart',
                 subMenus: [{
-                    name: '数据可视化',
-                    url: 'bi',
-                    path: 'data/bi.html'
+                    name: 'Echart基础模型',
+                    url: 'base_model',
+                    path: 'data/base_model.html'
                 }, {
                     name: '数据分析',
                     url: 'analyze',
                     path: 'data/analyze.html'
+                }, {
+                    name: 'Echart图形展示',
+                    url: 'base_model',
+                    path: 'data/base_echart.html'
                 }]
         }],
         // 当前登录的用户

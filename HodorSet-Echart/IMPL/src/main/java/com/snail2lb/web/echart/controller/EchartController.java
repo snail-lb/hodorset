@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.snail2lb.web.common.JsonResult;
@@ -181,5 +183,30 @@ public class EchartController {
         data.put("data", dataList);
 
         return JsonResult.ok().put("msg",data);
+    }
+
+
+    @ApiOperation(value = "获取动态数据", notes = " 获取动态数据")
+    @RequestMapping(value = "/data", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public JsonResult getData() {
+        /*String time = dateTimeFormatter.format(LocalTime.now().withNano(0));
+        Integer value = RandomUtils.nextInt(0, 100);
+
+        if(cateList.size() < 10){
+            cateList.add(time);
+            dataList.add(value);
+        }else{
+            cateList.remove(0);
+            dataList.remove(0);
+            cateList.add(time);
+            dataList.add(value);
+        }
+
+        Map<String,Object> data = new HashMap<>();
+        data.put("categories", cateList);
+        data.put("data", dataList);*/
+        String data = String.format("{\n  \"dataset\": {\n    \"source\": [\n      [\n        \"product\",\n        \"2005\",\n        \"2006\",\n        \"2007\"\n      ],\n      [\n        \"张三\",\n        50,\n        50,\n        50\n      ],\n      [\n        \"李四\",\n        70.1,\n        70.1,\n        70.1\n      ],\n      [\n        \"王五\",\n        80.4,\n        80.4,\n        80.4\n      ][\n        \"赵六\",\n        90.5,\n        90.5,\n        90.5\n      ]\n    ]\n  }\n}");
+        JSONObject obj = JSON.parseObject(data);
+        return JsonResult.ok().put("dataset",obj);
     }
 }

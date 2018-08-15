@@ -4,14 +4,13 @@ layui.define(['echarts', 'jquery', 'admin','config'], function(exports){
     var admin = layui.admin;
     var config = layui.config;
 
-    var echartbi = {
+    var echmodel = {
         //获取该组所有的option  $fatherNode：父节点
-        getOptionByGroup: function($fatherNode, type){
-            var url = "echart/echart/group1"
+        getOptionByGroup: function($fatherNode, group){
+            var url = "model/" + group;
             admin.req(url, {}, function(data){
-                echartbi.draw($fatherNode, data.echartModels);
+                echmodel.draw($fatherNode, data.data);
             }, "GET");
-
         },
 
         //动态添加节点数据 $fatherNode：父节点  echartModel:需要渲染的数据结构，数组
@@ -20,17 +19,18 @@ layui.define(['echarts', 'jquery', 'admin','config'], function(exports){
                 var echartModel = echartModels[i];
 
                 //动态设置节点
-                var $div_col = $("<div></div>").setAttribute("class", "layui-col-md"+echartModel.layuiColMd);
+                var $div_col = $("<div></div>").attr("class", "layui-col-md"+echartModel.layuiColMd);
                 var $div_bg = $("<div class='layui-bg-gray'></div>");
-                $div_bg.setAttribute("style","height:" + echartModel.height + "px;");
-                $div_bg.setAttribute("id", echartModel.id);
+                $div_bg.attr("style","height:" + echartModel.height + "px;");
+                $div_bg.attr("id", echartModel.id);
                 $div_col.append($div_bg);
                 $fatherNode.append($div_col);
 
-                var echart_bg = echarts.init($div_bg);
-                echart_bg.setOption(echartModel.option);
+                var echart_bg = echarts.init($div_bg[0]);
+                var option_data = JSON.parse(echartModel.option);
+                echart_bg.setOption(option_data);
                 //设置数据
-                echartbi.setData(echart_bg,echartModel);
+                echmodel.setData(echart_bg,echartModel);
             }
             //$fatherNode.append('<div class="layui-col-md4"><div class="layui-bg-gray" style="height:400px;" id="'+model_id+'"></div></div>');
         },
@@ -50,8 +50,10 @@ layui.define(['echarts', 'jquery', 'admin','config'], function(exports){
                         url: url,
                         type: echartModel.dataRequestMethod,
                         success: function (data) {
+                            //var dataset_data = JSON.parse(data.dataset);
+                            var dataset_data = data.dataset;
                             if(echartModel.dataType == "DATASET_ARRAY"){
-                                echart_bg.setOption(data.dataset);
+                                echart_bg.setOption(dataset_data);
                                 /*echart_bg.setOption({
                                     dataset: {
                                         source: [
@@ -64,7 +66,7 @@ layui.define(['echarts', 'jquery', 'admin','config'], function(exports){
                                     }
                                 });*/
                             }else if(echartModel.dataType == "DATASET_MAP"){
-                                echart_bg.setOption(data.dataset);
+                                echart_bg.setOption(dataset_data);
                                 /*echart_bg.setOption({
                                     dataset: {
                                         dimensions: ['product', '2015', '2016', '2017'],
@@ -87,5 +89,5 @@ layui.define(['echarts', 'jquery', 'admin','config'], function(exports){
     };
 
     //输出test接口
-    exports('echartbi', echartbi);
+    exports('echmodel', echmodel);
 });

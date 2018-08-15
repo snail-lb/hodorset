@@ -1,0 +1,32 @@
+<div class="layui-card">
+    <div class="layui-card-header">
+        <h2 class="header-title">数据可视化</h2>
+        <span class="layui-breadcrumb pull-right">
+          <a href="#!console">首页</a>
+          <a><cite>数据可视化</cite></a>
+        </span>
+    </div>
+    <div class="layui-card-body">
+
+        <blockquote class="layui-card-body layui-elem-quote">
+            Echart默认图表展示
+        </blockquote>
+
+        <!--使用布局来显示图表-->
+        <div class="layui-card-body layui-fluid">
+            <div class="layui-row layui-col-space10" id="echart-row">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    layui.use(['echarts','echmodel', 'jquery'], function () {
+        var echarts = layui.echarts;
+        var $ = layui.jquery;
+        var echmodel = layui.echmodel;
+
+        var $father = $('#echart-row');
+        echmodel.getOptionByGroup($father, "test")
+    });
+</script>

@@ -3,6 +3,7 @@ package com.snail2lb.web.echart.model;
 
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.snail2lb.web.echart.api.emuns.DataTypeEmun;
@@ -18,6 +19,7 @@ public class EchartModelPO {
     @TableId
     private Integer id;
     private String name;
+    @TableField("`group`")
     private String group;
     //数据接口主要存储获取数据的接口 不填的话默认为本系统中去数据 http://localhost:8088/
     private String dataUrl;
