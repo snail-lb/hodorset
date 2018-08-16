@@ -6,15 +6,14 @@ layui.define(['echarts', 'jquery', 'admin','config'], function(exports){
 
     var echmodel = {
         //获取该组所有的option  $fatherNode：父节点
-        getOptionByGroup: function($fatherNode, group){
+        setModelByGroup: function($fatherNode, group){
             var url = "model/" + group;
             admin.req(url, {}, function(data){
-                echmodel.draw($fatherNode, data.data);
+                echmodel.setModelDraw($fatherNode, data.data);
             }, "GET");
         },
-
         //动态添加节点数据 $fatherNode：父节点  echartModel:需要渲染的数据结构，数组
-        draw: function($fatherNode, echartModels){
+        setModelDraw: function($fatherNode, echartModels){
             for (var i = 0, len = echartModels.length; i < len; i++) {
                 var echartModel = echartModels[i];
 
@@ -34,12 +33,11 @@ layui.define(['echarts', 'jquery', 'admin','config'], function(exports){
 
                 echart_bg.setOption(option_data);
                 //设置数据
-                echmodel.setData(echart_bg,echartModel);
+                echmodel.setModelData(echart_bg,echartModel);
             }
         },
-
         //获取数据
-        setData: function(echart_bg, echartModel){
+        setModelData: function(echart_bg, echartModel){
             var interval = echartModel.interval;
             var url;
             if(echartModel.url == null || echartModel.url == config.base_server){
@@ -59,26 +57,56 @@ layui.define(['echarts', 'jquery', 'admin','config'], function(exports){
             }
         },
 
-        setOption: function getOptionData(url,requestMethod, echart_bg, dataType){
-        $.ajax({
-            url: url,
-            type: requestMethod,
-            success: function (data) {
-                //var dataset_data = JSON.parse(data.dataset);
-                var dataset_data = data.dataset;
-                if(dataType == "DATASET_ARRAY"){
-                    echart_bg.setOption(dataset_data);
-                }else if(dataType == "DATASET_MAP"){
-                    echart_bg.setOption(dataset_data);
-                }else{
-                    //暂未实现
-                    console.log("暂不支持该种数据结构");
+        setOption: function getOptionData(url, requestMethod, echart_bg, dataType){
+            $.ajax({
+                url: url,
+                type: requestMethod,
+                success: function (data) {
+                    var dataset_data = data.dataset;
+                    if(dataType == "DATASET_ARRAY"){
+                        echart_bg.setOption(dataset_data);
+                    }else if(dataType == "DATASET_MAP"){
+                        echart_bg.setOption(dataset_data);
+                    }else{
+                        //暂未实现
+                        console.log("暂不支持该种数据结构");
+                    }
                 }
-            }
-        })
-    }
-    };
+            })
+        },
 
+        //默认的基本图形设置
+        setCustomOption: function($fatherNode, type){
+            var url;
+            if(null != type){
+                url = "option/" + type;
+            }else{
+                url = "option/all";
+            }
+            admin.req(url, {}, function(data){
+                var options = data.data;
+
+                for (var i = 0, len = options.length; i < len; i++) {
+                    var option = options[i];
+
+                    //动态设置节点
+                    var $div_col = $("<div class='layui-col-md4'></div>");
+                    var $div_bg = $("<div class='layui-bg-gray' style='height:400px;'></div>");
+                    $div_bg.attr("id", option.id);
+                    $div_col.append($div_bg);
+                    $fatherNode.append($div_col);
+
+                    var echart_bg = echarts.init($div_bg[0]);
+                    var option_data = JSON.parse(option.option);
+                    echart_bg.setOption(option_data);
+                    console.log("est");
+                    var dataset_data = JSON.parse(option.dataset);
+                    echart_bg.setOption(dataset_data);
+                }
+
+            }, "GET");
+        }
+    };
     //输出test接口
     exports('echmodel', echmodel);
 });

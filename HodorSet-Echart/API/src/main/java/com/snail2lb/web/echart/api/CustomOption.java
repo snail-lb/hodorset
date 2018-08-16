@@ -14,6 +14,7 @@ public class CustomOption {
     private EchartTypeEmun type;
     private String description;
     private String option;
+    private String dataset;
 
     public Integer getId() {
         return id;
@@ -53,5 +54,13 @@ public class CustomOption {
 
     public void setOption(String option) {
         this.option = option;
+    }
+
+    public String getDataset() {
+        return dataset;
+    }
+
+    public void setDataset(String dataset) {
+        this.dataset = dataset;
     }
 }

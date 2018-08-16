@@ -1,7 +1,5 @@
 package com.snail2lb.web.echart.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,14 +33,19 @@ public class CustomOptionController {
     @ApiOperation(value = "获取指定的默认图形结构", notes = "获取指定的默认图形结构")
     @RequestMapping(value = "/{type}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public PageResult<CustomOption> getCustomOptionByType(@PathVariable String type) {
-        List<CustomOption> customOptions = customOptionService.selectByType(type);
-        return new PageResult<CustomOption>(customOptions);
+        return customOptionService.selectByType(type);
+    }
+
+    @ApiOperation(value = "分页获取所有的默认图形结构", notes = "分页获取所有的默认图形结构")
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public PageResult<CustomOption> getAllCustomOptionPage(@RequestParam Integer pageNum, @RequestParam Integer pageSize) {
+        return customOptionService.selectAllPage(pageNum, pageSize);
     }
 
     @ApiOperation(value = "获取所有的默认图形结构", notes = "获取所有的默认图形结构")
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public PageResult<CustomOption> getAllCustomOption(@RequestParam Integer pageNum, @RequestParam Integer pageSize) {
-        return customOptionService.selectAllPage(pageNum, pageSize);
+    @RequestMapping(value = "/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public PageResult<CustomOption> getAllCustomOption() {
+        return customOptionService.list();
     }
 
     @ApiOperation(value = "添加一个默认图形结构", notes = "添加一个默认图形结构")

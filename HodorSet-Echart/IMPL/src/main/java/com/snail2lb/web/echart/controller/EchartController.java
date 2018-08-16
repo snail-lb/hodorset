@@ -209,4 +209,7 @@ public class EchartController {
         JSONObject obj = JSON.parseObject(data);
         return JsonResult.ok().put("dataset",obj);
     }
+
+
+
 }

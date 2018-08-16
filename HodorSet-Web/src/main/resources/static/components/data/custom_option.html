@@ -1,15 +1,15 @@
 <div class="layui-card">
     <div class="layui-card-header">
-        <h2 class="header-title">Echart图形展示</h2>
+        <h2 class="header-title">Echart基础模型展示</h2>
         <span class="layui-breadcrumb pull-right">
           <a href="#!console">首页</a>
-          <a><cite>Echart图形展示</cite></a>
+          <a><cite>Echart基础模型展示</cite></a>
         </span>
     </div>
     <div class="layui-card-body">
 
         <blockquote class="layui-card-body layui-elem-quote">
-            Echart图形样式
+            Echart默认图表展示
         </blockquote>
 
         <!--使用布局来显示图表-->
@@ -21,12 +21,11 @@
 </div>
 
 <script>
-    layui.use(['echarts','echmodel', 'jquery'], function () {
-        var echarts = layui.echarts;
+    layui.use(['jquery', 'echmodel'], function () {
         var $ = layui.jquery;
         var echmodel = layui.echmodel;
 
         var $father = $('#echart-row');
-        echmodel.setModelByGroup($father, "test")
+        echmodel.setCustomOption($father);
     });
 </script>

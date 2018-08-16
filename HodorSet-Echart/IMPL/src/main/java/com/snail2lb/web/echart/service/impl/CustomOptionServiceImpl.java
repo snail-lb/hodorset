@@ -35,11 +35,12 @@ public class CustomOptionServiceImpl implements CustomOptionService {
     }
 
     @Override
-    public List<CustomOption> list() {
+    public PageResult<CustomOption> list() {
         List<CustomOption> customOptions = new ArrayList<>();
         customOptionMapper.selectList(null)
                 .forEach(customOptionPO -> customOptions.add(po2Vo(customOptionPO)));
-        return customOptions;
+        PageResult<CustomOption> result = new PageResult<>(customOptions);
+        return result;
     }
 
     @Override
@@ -61,15 +62,18 @@ public class CustomOptionServiceImpl implements CustomOptionService {
     }
 
     @Override
-    public List<CustomOption> selectByType(String type) {
+    public PageResult<CustomOption> selectByType(String type) {
         List<CustomOption> customOptions = new ArrayList<>();
         customOptionMapper.selectList(new EntityWrapper<CustomOptionPO>().where("type={0}",type))
                 .forEach(customOptionPO -> customOptions.add(po2Vo(customOptionPO)));
-        return customOptions;
+        PageResult<CustomOption> result = new PageResult<>(customOptions);
+        return result;
     }
 
     @Override
     public PageResult<CustomOption> selectAllPage(Integer pageNum, Integer pageSize) {
+        pageNum = null==pageNum?1:pageNum;
+        pageSize = null==pageSize?20:pageSize;
         Page<CustomOption> page = new Page<>(pageNum, pageSize);
         List<CustomOption> options = new ArrayList<>();
         customOptionMapper.selectPage(page, null).stream().forEach(po ->options.add(po2Vo(po)));

@@ -71,8 +71,12 @@ layui.define(function (exports) {
                     path: 'data/analyze.html'
                 }, {
                     name: 'Echart图形展示',
-                    url: 'base_model',
+                    url: 'base_echart',
                     path: 'data/base_echart.html'
+                }, {
+                    name: 'Echart默认基本图形展示',
+                    url: 'custom_option',
+                    path: 'data/custom_option.html'
                 }]
         }],
         // 当前登录的用户
