@@ -4,6 +4,7 @@ package com.snail2lb.web.echart.api;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.snail2lb.web.echart.api.emuns.DataTypeEmun;
+import com.snail2lb.web.echart.api.emuns.EchartTypeEmun;
 
 /**
  * @autor: lvbiao
@@ -16,7 +17,7 @@ public class EchartModel {
     private String name;
     private String group;
     //图形种类
-    private String type;
+    private EchartTypeEmun type;
     //数据接口主要存储获取数据的接口 不填的话默认为本系统中去数据 http://localhost:8088/
     private String dataUrl;
     //数据接口主要存储获取数据的接口   如：echart/data
@@ -54,11 +55,11 @@ public class EchartModel {
         this.name = name;
     }
 
-    public String getType() {
+    public EchartTypeEmun getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(EchartTypeEmun type) {
         this.type = type;
     }
 

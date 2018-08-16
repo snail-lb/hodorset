@@ -6,5 +6,10 @@ package com.snail2lb.web.echart.api.emuns;
  * @descript:
  * @date: 2018-08-16 10:51
  */
-public class EchartTypeEmun {
+public enum EchartTypeEmun {
+    BAR,
+    LINE,
+    FUNNEL,
+    GAUGE,
+    PIE
 }

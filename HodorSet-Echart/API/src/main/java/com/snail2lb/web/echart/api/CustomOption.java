@@ -1,5 +1,7 @@
 package com.snail2lb.web.echart.api;
 
+import com.snail2lb.web.echart.api.emuns.EchartTypeEmun;
+
 /**
  * @autor: lvbiao
  * @version: 1.0
@@ -9,7 +11,7 @@ package com.snail2lb.web.echart.api;
 public class CustomOption {
     private Integer id;
     private String name;
-    private String type;
+    private EchartTypeEmun type;
     private String description;
     private String option;
 
@@ -29,11 +31,11 @@ public class CustomOption {
         this.name = name;
     }
 
-    public String getType() {
+    public EchartTypeEmun getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(EchartTypeEmun type) {
         this.type = type;
     }
 

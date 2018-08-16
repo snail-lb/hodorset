@@ -2,6 +2,7 @@ package com.snail2lb.web.echart.model;
 
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.snail2lb.web.echart.api.emuns.EchartTypeEmun;
 
 /**
  * @autor: lvbiao
@@ -14,7 +15,7 @@ public class CustomOptionPO {
     @TableId
     private Integer id;
     private String name;
-    private String type;
+    private EchartTypeEmun type;
     private String description;
     private String option;
 
@@ -34,11 +35,11 @@ public class CustomOptionPO {
         this.name = name;
     }
 
-    public String getType() {
+    public EchartTypeEmun getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(EchartTypeEmun type) {
         this.type = type;
     }
 
