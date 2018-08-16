@@ -5,12 +5,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.snail2lb.web.common.beans.BeanCopyUtil;
 import com.snail2lb.web.common.exception.BusinessException;
 import com.snail2lb.web.echart.api.EchartModel;
+import com.snail2lb.web.echart.api.emuns.DataTypeEmun;
 import com.snail2lb.web.echart.dao.EchartModelMapper;
 import com.snail2lb.web.echart.model.EchartModelPO;
 import com.snail2lb.web.echart.service.EchartModelService;
@@ -44,6 +46,7 @@ public class EchartModelServiceImpl implements EchartModelService {
         List<EchartModel> echartModels = new ArrayList<>();
         Wrapper<EchartModelPO> wrapper = new EntityWrapper<EchartModelPO>();
         wrapper.eq("`group`", group);
+        wrapper.orderBy("`order`");
         echartModelMapper.selectList(wrapper)
                 .forEach(echartModelPO -> echartModels.add(po2Vo(echartModelPO)));
         return echartModels;
@@ -72,13 +75,22 @@ public class EchartModelServiceImpl implements EchartModelService {
 
     private void setDefaultValue(EchartModel echartModel){
         if(null == echartModel.getInterval()){
-            echartModel.setInterval(10 * 60 * 1000);
+            echartModel.setInterval(0);
         }
         if(null == echartModel.getLayuiColMd()){
             echartModel.setLayuiColMd(4);
         }
         if(null == echartModel.getHeight()){
             echartModel.setHeight(400);
+        }
+        if(null == echartModel.getLayuiColMdOffset()){
+            echartModel.setLayuiColMdOffset(0);
+        }
+        if(null == echartModel.getDataRequestMethod()){
+            echartModel.setDataRequestMethod(RequestMethod.GET);
+        }
+        if(null == echartModel.getDataType()){
+            echartModel.setDataType(DataTypeEmun.DATASET_MAP);
         }
     }
 

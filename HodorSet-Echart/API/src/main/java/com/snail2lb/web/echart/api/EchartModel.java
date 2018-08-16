@@ -15,19 +15,23 @@ public class EchartModel {
     private Integer id;
     private String name;
     private String group;
+    //图形种类
+    private String type;
     //数据接口主要存储获取数据的接口 不填的话默认为本系统中去数据 http://localhost:8088/
     private String dataUrl;
     //数据接口主要存储获取数据的接口   如：echart/data
     private String dataInterface;
+    //数据请求方法  默认GET
     private RequestMethod dataRequestMethod;
+    //dataset 的数据结构  默认DATASET_MAP
     private DataTypeEmun dataType;
-    //数据刷新频率  单位毫秒
+    //数据刷新频率  单位毫秒 默认0，只会加载一次
     private Integer interval;
     //option结构
     private String option;
     //布局宽度 1-12 默认4
     private Integer layuiColMd;
-    //偏移量 默认空，用于调整图形在一行中的偏移位置
+    //偏移量 默认空，用于调整图形在一行中的偏移位置 默认0
     private Integer layuiColMdOffset;
     //图形高度，默认400px
     private Integer height;
@@ -48,6 +52,14 @@ public class EchartModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getOption() {

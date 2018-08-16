@@ -21,6 +21,8 @@ public class EchartModelPO {
     private String name;
     @TableField("`group`")
     private String group;
+    //图形种类
+    private String type;
     //数据接口主要存储获取数据的接口 不填的话默认为本系统中去数据 http://localhost:8088/
     private String dataUrl;
     //数据接口主要存储获取数据的接口   如：echart/data
@@ -54,6 +56,14 @@ public class EchartModelPO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getOption() {
