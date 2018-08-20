@@ -1,24 +1,25 @@
 package com.snail2lb.web.system.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.snail2lb.web.common.beans.BeanCopyUtil;
 import com.snail2lb.web.common.exception.ParameterException;
 import com.snail2lb.web.common.utils.UUIDUtil;
 import com.snail2lb.web.commons.api.Role;
-import com.snail2lb.web.commons.api.UserRole;
 import com.snail2lb.web.system.dao.RoleAuthoritiesMapper;
 import com.snail2lb.web.system.dao.RoleMapper;
 import com.snail2lb.web.system.dao.UserRoleMapper;
-import com.snail2lb.web.system.model.LoginRecordPO;
+import com.snail2lb.web.system.model.RoleAuthoritiesPO;
 import com.snail2lb.web.system.model.RolePO;
+import com.snail2lb.web.system.model.UserRolePO;
 import com.snail2lb.web.system.service.RoleService;
+import tk.mybatis.mapper.entity.Example;
 
 @Service
 public class RoleServiceImpl implements RoleService {
@@ -31,7 +32,9 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public String[] getRoleIds(String userId) {
-        List<UserRole> userRoles = userRoleMapper.selectList(new EntityWrapper().eq("user_id", userId));
+        UserRolePO po = new UserRolePO();
+        po.setUserId(userId);
+        List<UserRolePO> userRoles = userRoleMapper.select(po);
         String[] roleIds = new String[userRoles.size()];
         for (int i = 0; i < userRoles.size(); i++) {
             roleIds[i] = userRoles.get(i).getRoleId();
@@ -41,11 +44,18 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public List<Role> list(boolean showDelete) {
-        Wrapper wrapper = new EntityWrapper();
+        Example example = new Example(RolePO.class);
         if (!showDelete) {
-            wrapper.eq("is_delete", 0);
+            example.createCriteria().andEqualTo("is_delete",0);
         }
-        return roleMapper.selectList(wrapper.orderBy("create_time", true));
+        example.setOrderByClause("create_time");
+
+        List<RolePO> pos =  roleMapper.selectByExample(example);
+        List<Role> result = new ArrayList<>();
+        if(!CollectionUtils.isEmpty(pos)){
+            pos.stream().forEach(po -> result.add(po2Vo(po)));
+        }
+        return result;
     }
 
     @Override
@@ -57,7 +67,12 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public boolean update(Role role) {
-        return roleMapper.updateById(vo2Po(role)) > 0;
+        RolePO po = vo2Po(role);
+
+        if(po.getRoleId() ==null){
+            throw new ParameterException("修改Role需要设置roleId值");
+        }
+        return roleMapper.updateByPrimaryKeySelective(po) > 0;
     }
 
     @Override
@@ -68,21 +83,23 @@ public class RoleServiceImpl implements RoleService {
         Role role = new Role();
         role.setRoleId(roleId);
         role.setIsDelete(isDelete);
-        boolean rs = roleMapper.updateById(vo2Po(role)) > 0;
+        boolean rs = update(role);
         if (rs) {  //删除角色的权限
-            roleAuthoritiesMapper.delete(new EntityWrapper().eq("role_id", roleId));
+            RoleAuthoritiesPO po = new RoleAuthoritiesPO();
+            po.setRoleId(roleId);
+            roleAuthoritiesMapper.delete(po);
         }
         return rs;
     }
 
     @Override
     public Role getById(String roleId) {
-        return po2Vo(roleMapper.selectById(roleId));
+        return po2Vo(roleMapper.selectByPrimaryKey(roleId));
     }
 
     @Override
     public boolean delete(String roleId) {
-        return roleMapper.deleteById(roleId) > 0;
+        return roleMapper.deleteByPrimaryKey(roleId) > 0;
     }
 
     private RolePO vo2Po(Role vo){

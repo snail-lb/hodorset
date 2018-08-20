@@ -1,25 +1,26 @@
-package com.snail2lb.web.echart.model;
-
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableName;
-import com.snail2lb.web.echart.api.emuns.EchartTypeEmun;
+package com.snail2lb.web.test.vo;
 
 /**
- * @autor: lvbiao
+ * @author: lvbiao
  * @version: 1.0
- * @descript: 系统默认的echart结构
- * @date: 2018-08-12 17:48
+ * @describe:
+ * @date 2018-08-20 19:50:25
  */
-@TableName("sys_custom_option")
-public class CustomOptionPO {
-    @TableId
+public class CustomOption {
+    
     private Integer id;
+    
     private String name;
-    private EchartTypeEmun type;
+    
+    private String type;
+    
     private String description;
+    //默认的Echart结构
     private String option;
+    
     private String dataset;
 
+    
     public Integer getId() {
         return id;
     }
@@ -27,7 +28,7 @@ public class CustomOptionPO {
     public void setId(Integer id) {
         this.id = id;
     }
-
+    
     public String getName() {
         return name;
     }
@@ -35,15 +36,15 @@ public class CustomOptionPO {
     public void setName(String name) {
         this.name = name;
     }
-
-    public EchartTypeEmun getType() {
+    
+    public String getType() {
         return type;
     }
 
-    public void setType(EchartTypeEmun type) {
+    public void setType(String type) {
         this.type = type;
     }
-
+    
     public String getDescription() {
         return description;
     }
@@ -51,7 +52,7 @@ public class CustomOptionPO {
     public void setDescription(String description) {
         this.description = description;
     }
-
+    
     public String getOption() {
         return option;
     }
@@ -59,7 +60,7 @@ public class CustomOptionPO {
     public void setOption(String option) {
         this.option = option;
     }
-
+    
     public String getDataset() {
         return dataset;
     }
@@ -67,4 +68,5 @@ public class CustomOptionPO {
     public void setDataset(String dataset) {
         this.dataset = dataset;
     }
+
 }

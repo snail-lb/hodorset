@@ -2,8 +2,6 @@ package com.snail2lb.web.commons.api;
 
 import java.util.Date;
 
-import com.baomidou.mybatisplus.annotations.TableField;
-
 public class LoginRecord {
     private String id;
 

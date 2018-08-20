@@ -1,10 +1,11 @@
 package com.snail2lb.web.system.dao;
 
 
-import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.snail2lb.web.system.model.RoleAuthoritiesPO;
+import tk.mybatis.mapper.common.Mapper;
 
-public interface RoleAuthoritiesMapper extends BaseMapper<RoleAuthoritiesPO> {
+@org.apache.ibatis.annotations.Mapper
+public interface RoleAuthoritiesMapper extends Mapper<RoleAuthoritiesPO> {
 
     int deleteTrash();
 }

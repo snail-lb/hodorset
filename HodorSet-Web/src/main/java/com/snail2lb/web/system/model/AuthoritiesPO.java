@@ -2,12 +2,14 @@ package com.snail2lb.web.system.model;
 
 import java.util.Date;
 
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableName;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-@TableName("sys_authorities")
+
+
+@Table(name="sys_authorities")
 public class AuthoritiesPO{
-    @TableId
+    @Id
     private String authority;
 
     private String authorityName;

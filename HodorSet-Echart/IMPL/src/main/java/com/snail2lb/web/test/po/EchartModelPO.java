@@ -1,47 +1,63 @@
-package com.snail2lb.web.echart.model;
+package com.snail2lb.web.test.po;
 
-
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableName;
-import com.snail2lb.web.echart.api.emuns.DataTypeEmun;
-import com.snail2lb.web.echart.api.emuns.EchartTypeEmun;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
- * @autor: lvbiao
+ * @author: lvbiao
  * @version: 1.0
- * @descript:
- * @date: 2018-08-12 11:49
+ * @describe:
+ * @date 2018-08-20 19:50:25
  */
-@TableName("sys_echart_model")
+@Table(name = "`sys_echart_model`")
 public class EchartModelPO {
-    @TableId
+    
+    @Id
+    @Column(name = "`id`")
     private Integer id;
+    
+    @Column(name = "`name`")
     private String name;
-    @TableField("`group`")
+    
+    @Column(name = "`group`")
     private String group;
-    //图形种类
-    private EchartTypeEmun type;
-    //数据接口主要存储获取数据的接口 不填的话默认为本系统中去数据 http://localhost:8088/
+    
+    @Column(name = "`type`")
+    private String type;
+    
+    @Column(name = "`data_url`")
     private String dataUrl;
-    //数据接口主要存储获取数据的接口   如：echart/data
+    
+    @Column(name = "`data_interface`")
     private String dataInterface;
-    private RequestMethod dataRequestMethod;
-    private DataTypeEmun dataType;
-    //数据刷新频率  单位毫秒
+    
+    @Column(name = "`data_request_method`")
+    private String dataRequestMethod;
+    
+    @Column(name = "`data_type`")
+    private String dataType;
+    
+    @Column(name = "`interval`")
     private Integer interval;
-    //option结构
+    
+    @Column(name = "`option`")
     private String option;
-    //布局宽度 1-12 默认4
+    
+    @Column(name = "`layui_col_md`")
     private Integer layuiColMd;
-    //偏移量 默认空，用于调整图形在一行中的偏移位置
+    
+    @Column(name = "`layui_col_md_offset`")
     private Integer layuiColMdOffset;
-    //图形高度，默认400px
+    
+    @Column(name = "`height`")
     private Integer height;
-    //在该组中所有图形中的排列顺序
+    
+    @Column(name = "`order`")
     private Integer order;
+
 
     public Integer getId() {
         return id;
@@ -59,28 +75,20 @@ public class EchartModelPO {
         this.name = name;
     }
 
-    public EchartTypeEmun getType() {
-        return type;
-    }
-
-    public void setType(EchartTypeEmun type) {
-        this.type = type;
-    }
-
-    public String getOption() {
-        return option;
-    }
-
-    public void setOption(String option) {
-        this.option = option;
-    }
-
     public String getGroup() {
         return group;
     }
 
     public void setGroup(String group) {
         this.group = group;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getDataUrl() {
@@ -99,20 +107,36 @@ public class EchartModelPO {
         this.dataInterface = dataInterface;
     }
 
-    public RequestMethod getDataRequestMethod() {
+    public String getDataRequestMethod() {
         return dataRequestMethod;
     }
 
-    public void setDataRequestMethod(RequestMethod dataRequestMethod) {
+    public void setDataRequestMethod(String dataRequestMethod) {
         this.dataRequestMethod = dataRequestMethod;
     }
 
-    public DataTypeEmun getDataType() {
+    public String getDataType() {
         return dataType;
     }
 
-    public void setDataType(DataTypeEmun dataType) {
+    public void setDataType(String dataType) {
         this.dataType = dataType;
+    }
+
+    public Integer getInterval() {
+        return interval;
+    }
+
+    public void setInterval(Integer interval) {
+        this.interval = interval;
+    }
+
+    public String getOption() {
+        return option;
+    }
+
+    public void setOption(String option) {
+        this.option = option;
     }
 
     public Integer getLayuiColMd() {
@@ -147,11 +171,4 @@ public class EchartModelPO {
         this.order = order;
     }
 
-    public Integer getInterval() {
-        return interval;
-    }
-
-    public void setInterval(Integer interval) {
-        this.interval = interval;
-    }
 }

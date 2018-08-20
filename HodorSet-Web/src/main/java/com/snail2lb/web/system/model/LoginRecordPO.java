@@ -1,13 +1,12 @@
 package com.snail2lb.web.system.model;
 
 import java.util.Date;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableName;
-
-@TableName("sys_login_record")
+@Table(name="sys_login_record")
 public class LoginRecordPO {
-    @TableId
+    @Id
     private String id;
 
     private String userId;

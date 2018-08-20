@@ -1,13 +1,12 @@
 package com.snail2lb.web.system.model;
 
 import java.util.Date;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableName;
-
-@TableName("sys_role_authorities")
+@Table(name="sys_role_authorities")
 public class RoleAuthoritiesPO {
-    @TableId
+    @Id
     private String id;
 
     private String roleId;

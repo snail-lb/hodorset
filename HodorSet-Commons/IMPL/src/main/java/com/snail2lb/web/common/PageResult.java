@@ -18,6 +18,10 @@ public class PageResult<T> {
 
     private List<T> data; // 当前数据, bootstrapTable是rows
 
+    private Integer pageNum;
+
+    private Integer pageSize;
+
     public PageResult() {
     }
 
@@ -33,6 +37,15 @@ public class PageResult<T> {
         this.data = rows;
         this.code = 0;
         this.msg = "";
+    }
+
+    public PageResult(long total,Integer pageNum,Integer pageSize, List<T> rows) {
+        this.count = total;
+        this.data = rows;
+        this.code = 0;
+        this.msg = "";
+        this.pageNum = pageNum;
+        this.pageSize = pageSize;
     }
 
     public int getCode() {
@@ -61,6 +74,22 @@ public class PageResult<T> {
 
     public List<T> getData() {
         return data;
+    }
+
+    public Integer getPageNum() {
+        return pageNum;
+    }
+
+    public void setPageNum(Integer pageNum) {
+        this.pageNum = pageNum;
+    }
+
+    public Integer getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
     }
 
     public void setData(List<T> data) {

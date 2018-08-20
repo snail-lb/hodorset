@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.baomidou.mybatisplus.plugins.Page;
+import com.github.pagehelper.PageHelper;
 import com.snail2lb.web.common.PageResult;
 import com.snail2lb.web.common.beans.BeanCopyUtil;
 import com.snail2lb.web.common.utils.UUIDUtil;
@@ -29,13 +29,16 @@ public class LoginRecordServiceImpl implements LoginRecordService {
     }
 
     @Override
-    public PageResult<LoginRecord> list(int pageNum, int pageSize, String startDate, String endDate, String account) {
-        Page<LoginRecord> page = new Page<>(pageNum, pageSize);
+    public PageResult<LoginRecord> list(Integer pageNum, Integer pageSize, String startDate, String endDate, String account) {
+        pageNum = pageNum==null?1:pageNum;
+        pageSize = pageSize==null?20:pageSize;
+        PageHelper.startPage(pageNum, pageSize);
+
         List<LoginRecord> loginRecords = new ArrayList<>();
-        loginRecordMapper.listFull(page, startDate, endDate, account)
+        loginRecordMapper.listFull( startDate, endDate, account)
                 .stream().forEach(loginRecordPO -> loginRecords.add(po2Vo(loginRecordPO)));
-        page.setRecords(loginRecords);
-        return new PageResult<>(page.getTotal(), page.getRecords());
+
+        return new PageResult(loginRecords.size(), loginRecords);
     }
 
     private LoginRecordPO vo2Po(LoginRecord vo){

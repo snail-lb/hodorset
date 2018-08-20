@@ -1,8 +1,10 @@
 package com.snail2lb.web.system.dao;
 
 
-import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.snail2lb.web.system.model.RolePO;
+import tk.mybatis.mapper.common.Mapper;
 
-public interface RoleMapper extends BaseMapper<RolePO> {
+@org.apache.ibatis.annotations.Mapper
+public interface RoleMapper extends Mapper<RolePO> {
+
 }

@@ -2,14 +2,13 @@ package com.snail2lb.web.system.model;
 
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableName;
-
-@TableName("sys_user")
+@Table(name="sys_user")
 public class UserPO {
-    @TableId
+    @Id
     private String userId;
 
     private String username;
@@ -36,10 +35,10 @@ public class UserPO {
 
     private Date updateTime;
 
-    @TableField(exist = false)
+    @Transient
     private List<AuthoritiesPO> authorities;  //权限
 
-    @TableField(exist = false)
+    @Transient
     private List<RolePO> roles;  //角色
 
     public String getUserId() {

@@ -1,44 +1,42 @@
-package com.snail2lb.web.echart.api;
-
-
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import com.snail2lb.web.echart.api.emuns.DataTypeEmun;
-import com.snail2lb.web.echart.api.emuns.EchartTypeEmun;
+package com.snail2lb.web.test.vo;
 
 /**
- * @autor: lvbiao
+ * @author: lvbiao
  * @version: 1.0
- * @descript:
- * @date: 2018-08-12 11:49
+ * @describe:
+ * @date 2018-08-20 19:50:23
  */
 public class EchartModel {
+    
     private Integer id;
+    
     private String name;
+    
     private String group;
-    //图形种类
-    private EchartTypeEmun type;
-    //数据接口主要存储获取数据的接口 不填的话默认为本系统中去数据 http://localhost:8088/
+    
+    private String type;
+    
     private String dataUrl;
-    //数据接口主要存储获取数据的接口   如：echart/data
+    
     private String dataInterface;
-    //数据请求方法  默认GET
-    private RequestMethod dataRequestMethod;
-    //dataset 的数据结构  默认DATASET_MAP
-    private DataTypeEmun dataType;
-    //数据刷新频率  单位毫秒 默认0，只会加载一次
+    
+    private String dataRequestMethod;
+    
+    private String dataType;
+    
     private Integer interval;
-    //option结构
+    
     private String option;
-    //布局宽度 1-12 默认4
+    
     private Integer layuiColMd;
-    //偏移量 默认空，用于调整图形在一行中的偏移位置 默认0
+    
     private Integer layuiColMdOffset;
-    //图形高度，默认400px
+    
     private Integer height;
-    //在该组中所有图形中的排列顺序
+    
     private Integer order;
 
+    
     public Integer getId() {
         return id;
     }
@@ -46,7 +44,7 @@ public class EchartModel {
     public void setId(Integer id) {
         this.id = id;
     }
-
+    
     public String getName() {
         return name;
     }
@@ -54,23 +52,7 @@ public class EchartModel {
     public void setName(String name) {
         this.name = name;
     }
-
-    public EchartTypeEmun getType() {
-        return type;
-    }
-
-    public void setType(EchartTypeEmun type) {
-        this.type = type;
-    }
-
-    public String getOption() {
-        return option;
-    }
-
-    public void setOption(String option) {
-        this.option = option;
-    }
-
+    
     public String getGroup() {
         return group;
     }
@@ -78,7 +60,15 @@ public class EchartModel {
     public void setGroup(String group) {
         this.group = group;
     }
+    
+    public String getType() {
+        return type;
+    }
 
+    public void setType(String type) {
+        this.type = type;
+    }
+    
     public String getDataUrl() {
         return dataUrl;
     }
@@ -86,7 +76,7 @@ public class EchartModel {
     public void setDataUrl(String dataUrl) {
         this.dataUrl = dataUrl;
     }
-
+    
     public String getDataInterface() {
         return dataInterface;
     }
@@ -94,23 +84,39 @@ public class EchartModel {
     public void setDataInterface(String dataInterface) {
         this.dataInterface = dataInterface;
     }
-
-    public RequestMethod getDataRequestMethod() {
+    
+    public String getDataRequestMethod() {
         return dataRequestMethod;
     }
 
-    public void setDataRequestMethod(RequestMethod dataRequestMethod) {
+    public void setDataRequestMethod(String dataRequestMethod) {
         this.dataRequestMethod = dataRequestMethod;
     }
-
-    public DataTypeEmun getDataType() {
+    
+    public String getDataType() {
         return dataType;
     }
 
-    public void setDataType(DataTypeEmun dataType) {
+    public void setDataType(String dataType) {
         this.dataType = dataType;
     }
+    
+    public Integer getInterval() {
+        return interval;
+    }
 
+    public void setInterval(Integer interval) {
+        this.interval = interval;
+    }
+    
+    public String getOption() {
+        return option;
+    }
+
+    public void setOption(String option) {
+        this.option = option;
+    }
+    
     public Integer getLayuiColMd() {
         return layuiColMd;
     }
@@ -118,7 +124,7 @@ public class EchartModel {
     public void setLayuiColMd(Integer layuiColMd) {
         this.layuiColMd = layuiColMd;
     }
-
+    
     public Integer getLayuiColMdOffset() {
         return layuiColMdOffset;
     }
@@ -126,7 +132,7 @@ public class EchartModel {
     public void setLayuiColMdOffset(Integer layuiColMdOffset) {
         this.layuiColMdOffset = layuiColMdOffset;
     }
-
+    
     public Integer getHeight() {
         return height;
     }
@@ -134,7 +140,7 @@ public class EchartModel {
     public void setHeight(Integer height) {
         this.height = height;
     }
-
+    
     public Integer getOrder() {
         return order;
     }
@@ -143,11 +149,4 @@ public class EchartModel {
         this.order = order;
     }
 
-    public Integer getInterval() {
-        return interval;
-    }
-
-    public void setInterval(Integer interval) {
-        this.interval = interval;
-    }
 }

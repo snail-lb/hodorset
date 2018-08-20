@@ -1,20 +1,39 @@
-package com.snail2lb.web.echart.api;
+package com.snail2lb.web.test.po;
 
-import com.snail2lb.web.echart.api.emuns.EchartTypeEmun;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
- * @autor: lvbiao
+ * @author: lvbiao
  * @version: 1.0
- * @descript: 系统默认的echart结构
- * @date: 2018-08-12 17:48
+ * @describe:
+ * @date 2018-08-20 19:50:26
  */
-public class CustomOption {
+@Table(name = "`sys_custom_option`")
+public class CustomOptionPO {
+    
+    @Id
+    @Column(name = "`id`")
     private Integer id;
+    
+    @Column(name = "`name`")
     private String name;
-    private EchartTypeEmun type;
+    
+    @Column(name = "`type`")
+    private String type;
+    
+    @Column(name = "`description`")
     private String description;
+    //默认的Echart结构
+    @Column(name = "`option`")
     private String option;
+    
+    @Column(name = "`dataset`")
     private String dataset;
+
 
     public Integer getId() {
         return id;
@@ -32,11 +51,11 @@ public class CustomOption {
         this.name = name;
     }
 
-    public EchartTypeEmun getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(EchartTypeEmun type) {
+    public void setType(String type) {
         this.type = type;
     }
 
@@ -63,4 +82,5 @@ public class CustomOption {
     public void setDataset(String dataset) {
         this.dataset = dataset;
     }
+
 }

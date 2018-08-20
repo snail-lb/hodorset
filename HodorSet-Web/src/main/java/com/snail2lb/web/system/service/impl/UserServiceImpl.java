@@ -1,6 +1,5 @@
 package com.snail2lb.web.system.service.impl;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -8,14 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.mapper.Wrapper;
-import com.baomidou.mybatisplus.plugins.Page;
 import com.snail2lb.web.common.PageResult;
 import com.snail2lb.web.common.beans.BeanCopyUtil;
 import com.snail2lb.web.common.exception.BusinessException;
 import com.snail2lb.web.common.exception.ParameterException;
-import com.snail2lb.web.common.utils.StringUtil;
 import com.snail2lb.web.common.utils.UUIDUtil;
 import com.snail2lb.web.commons.api.Role;
 import com.snail2lb.web.commons.api.User;
@@ -43,7 +38,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public PageResult<User> list(int pageNum, int pageSize, boolean showDelete, String column, String value) {
-        Wrapper<UserPO> wrapper = new EntityWrapper<UserPO>();
+        return null;
+        /*Wrapper<UserPO> wrapper = new EntityWrapper<UserPO>();
         if (StringUtil.isNotBlank(column)) {
             wrapper.like(column, value);
         }
@@ -75,7 +71,7 @@ public class UserServiceImpl implements UserService {
             }
             one.setRoles(tempUrs);
         }
-        return new PageResult<>(userPage.getTotal(), userList);
+        return new PageResult<>(userPage.getTotal(), userList);*/
     }
 
     @Override
@@ -102,9 +98,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean update(User user) {
-        boolean rs = userMapper.updateById(vo2Po(user)) > 0;
+        boolean rs = userMapper.updateByPrimaryKeySelective(vo2Po(user)) > 0;
         if (rs) {
-            userRoleMapper.delete(new EntityWrapper().eq("user_id", user.getUserId()));
+            UserRolePO po = new UserRolePO();
+            po.setUserId(user.getUserId());
+            userRoleMapper.delete(po);
             addUserRole(user.getUserId(), user.getRoles());
         }
         return rs;
@@ -132,7 +130,7 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setUserId(userId);
         user.setState(state);
-        return userMapper.updateById(vo2Po(user)) > 0;
+        return userMapper.updateByPrimaryKeySelective(vo2Po(user)) > 0;
     }
 
     @Override
@@ -141,17 +139,17 @@ public class UserServiceImpl implements UserService {
         user.setUserId(userId);
         String finalSecret = "{bcrypt}" + new BCryptPasswordEncoder().encode(password);
         user.setPassword(finalSecret);
-        return userMapper.updateById(vo2Po(user)) > 0;
+        return userMapper.updateByPrimaryKeySelective(vo2Po(user)) > 0;
     }
 
     @Override
     public User getById(String userId) {
-        return po2Vo(userMapper.selectById(userId));
+        return po2Vo(userMapper.selectByPrimaryKey(userId));
     }
 
     @Override
     public boolean delete(String userId) {
-        return userMapper.deleteById(userId) > 0;
+        return userMapper.deleteByPrimaryKey(userId) > 0;
     }
 
     private UserPO vo2Po(User vo){

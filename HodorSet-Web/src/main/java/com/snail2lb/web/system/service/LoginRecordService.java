@@ -8,5 +8,5 @@ public interface LoginRecordService {
 
     boolean add(LoginRecord loginRecord);
 
-    PageResult<LoginRecord> list(int pageNum, int pageSize, String startDate, String endDate, String account);
+    PageResult<LoginRecord> list(Integer pageNum, Integer pageSize, String startDate, String endDate, String account);
 }

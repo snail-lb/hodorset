@@ -7,7 +7,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.snail2lb.web.common.beans.BeanCopyUtil;
 import com.snail2lb.web.common.utils.UUIDUtil;
 import com.snail2lb.web.commons.api.Authorities;
@@ -33,7 +32,7 @@ public class AuthoritiesServiceImpl implements AuthoritiesService {
     @Override
     public List<Authorities> list() {
         List<Authorities> authoritiesList = new ArrayList<>();
-        authoritiesMapper.selectList(null).stream().forEach(po -> authoritiesList.add(po2Vo(po)));
+        authoritiesMapper.selectAll().stream().forEach(po -> authoritiesList.add(po2Vo(po)));
         return authoritiesList;
     }
 
@@ -84,7 +83,10 @@ public class AuthoritiesServiceImpl implements AuthoritiesService {
 
     @Override
     public boolean deleteRoleAuth(String roleId, String authId) {
-        return roleAuthoritiesMapper.delete(new EntityWrapper<RoleAuthoritiesPO>().eq("role_id", roleId).eq("authority", authId)) > 0;
+        RoleAuthoritiesPO po = new RoleAuthoritiesPO();
+        po.setRoleId(roleId);
+        po.setAuthority(authId);
+        return roleAuthoritiesMapper.delete(po)>0;
     }
 
     private AuthoritiesPO vo2Po(Authorities vo){
