@@ -7,10 +7,11 @@ layui.define(['echarts', 'jquery', 'admin','config'], function(exports){
     var echmodel = {
         //获取该组所有的option  $fatherNode：父节点
         setModelByGroup: function($fatherNode, group){
-            var url = "model/" + group;
-            admin.req(url, {}, function(data){
-                echmodel.setModelDraw($fatherNode, data.data);
-            }, "GET");
+            var url = "v1/echartModel/all";
+            var param = '{"group":"'+group+'"}';
+            admin.req(url, param, function(data){
+                echmodel.setModelDraw($fatherNode, data);
+            }, "POST");
         },
         //动态添加节点数据 $fatherNode：父节点  echartModel:需要渲染的数据结构，数组
         setModelDraw: function($fatherNode, echartModels){
@@ -77,14 +78,14 @@ layui.define(['echarts', 'jquery', 'admin','config'], function(exports){
 
         //默认的基本图形设置
         setCustomOption: function($fatherNode, type){
-            var url;
+            var url = "v1/customOption/all";
+            var param = '{}';
             if(null != type){
-                url = "option/" + type;
-            }else{
-                url = "option/all";
+                param = '{"type":"'+type+'"}';
             }
-            admin.req(url, {}, function(data){
-                var options = data.data;
+
+            admin.req(url, param, function(data){
+                var options = data;
 
                 for (var i = 0, len = options.length; i < len; i++) {
                     var option = options[i];
@@ -104,7 +105,7 @@ layui.define(['echarts', 'jquery', 'admin','config'], function(exports){
                     echart_bg.setOption(dataset_data);
                 }
 
-            }, "GET");
+            }, "POST");
         }
     };
     //输出test接口

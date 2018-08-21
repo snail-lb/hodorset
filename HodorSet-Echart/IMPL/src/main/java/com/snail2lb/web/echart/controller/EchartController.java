@@ -20,12 +20,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.snail2lb.web.common.JsonResult;
+import com.snail2lb.web.echart.api.vo.EchartModel;
 import com.snail2lb.web.echart.util.bar.BarChartUtil;
 import com.snail2lb.web.echart.util.funnel.FunnelChartUtil;
 import com.snail2lb.web.echart.util.gauge.GaugeChartUtil;
 import com.snail2lb.web.echart.util.line.LineChartUtil;
 import com.snail2lb.web.echart.util.pie.PieChartUtil;
-import com.snail2lb.web.test.vo.EchartModel;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 

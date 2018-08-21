@@ -1,6 +1,4 @@
-package com.snail2lb.web.test.controller;
-
-import java.util.List;
+package com.snail2lb.web.echart.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,8 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
-import com.snail2lb.web.test.service.EchartModelService;
-import com.snail2lb.web.test.vo.EchartModel;
+import com.snail2lb.web.echart.service.EchartModelService;
+import com.snail2lb.web.echart.api.vo.EchartModel;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -20,10 +18,10 @@ import io.swagger.annotations.ApiOperation;
  * @author: lvbiao
  * @version: 1.0
  * @describe:
- * @date 2018-08-20 19:50:24
+ * @date 2018-08-21 18:33:22
  */
 @RestController
-@RequestMapping("/v2/echartModel")
+@RequestMapping("/v1/echartModel")
 @Api(description = "echartModel管理接口")
 public class EchartModelController {
 

@@ -13,6 +13,7 @@
     <groupId>com.snail2lb</groupId>
     <artifactId>hodorset-echart-api</artifactId>
     <version>${hodorset.version}</version>
+    <packaging>jar</packaging>
 
     
 </project>

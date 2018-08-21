@@ -127,6 +127,7 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
                 data: data,
                 type: method,
                 dataType: 'JSON',
+                contentType: "application/json",
                 success: function (data) {
                     success(data);
                 },
