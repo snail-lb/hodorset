@@ -74,7 +74,8 @@ public class OAuth2ServerConfig {
                     .scopes("select")
                     .authorities("client")
                     .secret(finalSecret)
-                    .accessTokenValiditySeconds(300)
+                    .accessTokenValiditySeconds(30*24*60*60)
+
                     .and()
                     .withClient("client_2")
                     .resourceIds(RESOURCE_ID)
@@ -82,7 +83,7 @@ public class OAuth2ServerConfig {
                     .scopes("select")
                     .authorities("oauth2")
                     .secret(finalSecret)
-                    .accessTokenValiditySeconds(300);
+                    .accessTokenValiditySeconds(30*24*60*60);
         }
 
         @Override

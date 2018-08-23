@@ -131,9 +131,6 @@ public class UserServiceImpl implements UserService {
         if(StringUtils.isNotBlank(user.getRoleCode())) {
             Role role = roleService.selectByRoleCode(user.getRoleCode());
             user.setRole(role);
-            if(!CollectionUtils.isEmpty(role.getAuthorities())){
-                user.setAuthorities(role.getAuthorities());
-            }
         }
     }
 

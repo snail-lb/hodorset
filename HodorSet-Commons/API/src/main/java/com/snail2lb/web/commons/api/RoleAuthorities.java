@@ -19,7 +19,6 @@ public class RoleAuthorities implements Serializable {
     private String authority;
     //创建时间
     private Date createTime;
-
     
     public Integer getId() {
         return id;

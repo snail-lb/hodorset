@@ -2,7 +2,6 @@ package com.snail2lb.web.commons.api;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -44,7 +43,7 @@ public class User implements UserDetails {
     //角色
     private Role role;
     //权限
-    private List<Authorities> authorities;
+    //private List<Authorities> authorities;
     
     public Integer getId() {
         return id;
@@ -150,13 +149,9 @@ public class User implements UserDetails {
         this.role = role;
     }
 
-    public void setAuthorities(List<Authorities> authorities) {
-        this.authorities = authorities;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.authorities;
+        return this.role.getAuthorities();
     }
 
     @Override

@@ -1,12 +1,13 @@
 package com.snail2lb.web.system.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.snail2lb.web.common.JsonResult;
-import com.snail2lb.web.common.LoginUtil;
 import com.snail2lb.web.commons.api.User;
 import com.snail2lb.web.system.service.UserService;
 import io.swagger.annotations.Api;
@@ -20,11 +21,22 @@ public class MainController {
     @Autowired
     private UserService userService;
 
+    public User getLoginUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null) {
+            Object object = authentication.getPrincipal();
+            if (object != null) {
+                return (User) object;
+            }
+        }
+        return null;
+    }
+
     @ApiOperation(value = "获取个人信息")
     @ApiImplicitParam(name = "access_token", value = "令牌", required = true, dataType = "String")
     @GetMapping("/userInfo")
     public JsonResult userInfo() {
-        return JsonResult.ok().put("user", LoginUtil.getLoginUser());
+        return JsonResult.ok().put("user", getLoginUser());
     }
 
     @ApiOperation(value = "注册用户")

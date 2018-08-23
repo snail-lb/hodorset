@@ -46,6 +46,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         //对oauth开头的请求不拦截
-        http.authorizeRequests().antMatchers("/oauth/**","/echart/**").permitAll();
+        http.authorizeRequests().antMatchers("/oauth/**","/echart/**","/swagger-ui.html").permitAll();
     }
 }
