@@ -55,6 +55,7 @@
                 <ref bean="mybatisPageHelper"/>
             </array>
         </property>
+
     </bean>
 
     <!-- 扫描basePackage下所有的 接口-->

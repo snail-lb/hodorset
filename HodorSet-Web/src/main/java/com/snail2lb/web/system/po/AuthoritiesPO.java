@@ -1,8 +1,11 @@
-package com.snail2lb.web.commons.api;
+package com.snail2lb.web.system.po;
 
 import java.util.Date;
-
-import org.springframework.security.core.GrantedAuthority;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * @author: lvbiao
@@ -10,19 +13,24 @@ import org.springframework.security.core.GrantedAuthority;
  * @describe:
  * @date 2018-08-23 10:52:47
  */
-public class Authorities implements GrantedAuthority {
-
-    private static final long serialVersionUID = -6345851153042041840L;
-
+@Table(name = "`sys_authorities`")
+public class AuthoritiesPO {
+    
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "`id`")
     private Integer id;
     //名称
+    @Column(name = "`authority_name`")
     private String authorityName;
     //授权标识
+    @Column(name = "`authority`")
     private String authority;
     //创建时间
+    @Column(name = "`create_time`")
     private Date createTime;
 
-    
+
     public Integer getId() {
         return id;
     }
@@ -30,7 +38,7 @@ public class Authorities implements GrantedAuthority {
     public void setId(Integer id) {
         this.id = id;
     }
-    
+
     public String getAuthorityName() {
         return authorityName;
     }
@@ -38,11 +46,15 @@ public class Authorities implements GrantedAuthority {
     public void setAuthorityName(String authorityName) {
         this.authorityName = authorityName;
     }
-    
+
+    public String getAuthority() {
+        return authority;
+    }
+
     public void setAuthority(String authority) {
         this.authority = authority;
     }
-    
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -51,8 +63,4 @@ public class Authorities implements GrantedAuthority {
         this.createTime = createTime;
     }
 
-    @Override
-    public String getAuthority() {
-        return this.authority;
-    }
 }

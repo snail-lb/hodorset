@@ -1,26 +1,36 @@
-package com.snail2lb.web.commons.api;
+package com.snail2lb.web.system.po;
 
-import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * @author: lvbiao
  * @version: 1.0
  * @describe:
  * @date 2018-08-23 10:52:48
  */
-public class RoleAuthorities implements Serializable {
-
-    private static final long serialVersionUID = -1357540253945834328L;
-
+@Table(name = "`sys_role_authorities`")
+public class RoleAuthoritiesPO {
+    
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "`id`")
     private Integer id;
     //角色id
+    @Column(name = "`role_code`")
     private String roleCode;
     //权限id
+    @Column(name = "`authority`")
     private String authority;
     //创建时间
+    @Column(name = "`create_time`")
     private Date createTime;
 
-    
+
     public Integer getId() {
         return id;
     }
@@ -28,7 +38,7 @@ public class RoleAuthorities implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
-    
+
     public String getRoleCode() {
         return roleCode;
     }
@@ -36,7 +46,7 @@ public class RoleAuthorities implements Serializable {
     public void setRoleCode(String roleCode) {
         this.roleCode = roleCode;
     }
-    
+
     public String getAuthority() {
         return authority;
     }
@@ -44,7 +54,7 @@ public class RoleAuthorities implements Serializable {
     public void setAuthority(String authority) {
         this.authority = authority;
     }
-    
+
     public Date getCreateTime() {
         return createTime;
     }

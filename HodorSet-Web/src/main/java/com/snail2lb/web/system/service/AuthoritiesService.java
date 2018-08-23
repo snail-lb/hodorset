@@ -1,25 +1,29 @@
 package com.snail2lb.web.system.service;
 
-
 import java.util.List;
 
+import com.github.pagehelper.Page;
 import com.snail2lb.web.commons.api.Authorities;
 
+/**
+ * @author: lvbiao
+ * @version: 1.0
+ * @describe:
+ * @date 2018-08-23 10:52:46
+ */
 public interface AuthoritiesService {
 
-    List<String> listByUserId(String userId);
+    boolean insert(Authorities authorities);
 
-    List<Authorities> list();
+    boolean delete(Authorities authorities);
 
-    List<String> listByRoleId(List<String> roleId);
+    boolean deleteById(Object id);
 
-    List<String> listByRoleId(String roleId);
+    boolean update(Authorities authorities);
 
-    boolean add(Authorities authorities);
+    Authorities selectById(Object id);
 
-    boolean add(List<Authorities> authorities);
+    Page<Authorities> selectByConditions(Authorities authorities, Integer pageNum, Integer pageSize);
 
-    boolean addRoleAuth(String roleId, String authId);
-
-    boolean deleteRoleAuth(String roleId, String authId);
+    List<Authorities> selectByRoleCode(String roleCode);
 }

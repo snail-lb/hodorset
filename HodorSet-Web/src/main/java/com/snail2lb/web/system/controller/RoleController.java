@@ -1,90 +1,73 @@
 package com.snail2lb.web.system.controller;
 
-import java.util.Iterator;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.snail2lb.web.common.JsonResult;
-import com.snail2lb.web.common.PageResult;
-import com.snail2lb.web.commons.api.Role;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.snail2lb.web.system.service.RoleService;
+import com.snail2lb.web.commons.api.Role;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
-@Api(value = "角色相关的接口", tags = "role")
+/**
+ * @author: lvbiao
+ * @version: 1.0
+ * @describe:
+ * @date 2018-08-23 10:52:48
+ */
 @RestController
-@RequestMapping("/role")
+@RequestMapping("/v1/role")
+@Api(description = "角色表管理接口")
 public class RoleController {
+
     @Autowired
     private RoleService roleService;
 
-    @ApiOperation(value = "查询所有角色")
-    @ApiImplicitParam(name = "access_token", value = "令牌", required = true, dataType = "String")
-    @GetMapping()
-    public PageResult<Role> list(String keyword) {
-        List<Role> list = roleService.list(false);
-        if (keyword != null && !keyword.trim().isEmpty()) {
-            keyword = keyword.trim();
-            Iterator<Role> iterator = list.iterator();
-            while (iterator.hasNext()) {
-                Role next = iterator.next();
-                boolean b = next.getRoleId().contains(keyword) || next.getRoleName().contains(keyword) || next.getComments().contains(keyword);
-                if (!b) {
-                    iterator.remove();
-                }
-            }
-        }
-        return new PageResult<>(list);
+    @RequestMapping(method = RequestMethod.POST)
+    @ApiOperation(value = "增加角色表", notes = " 增加角色表")
+    public boolean add(@RequestBody Role role){
+        return roleService.insert(role);
     }
 
-    @ApiOperation(value = "添加角色")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "role", value = "角色信息", required = true, dataType = "Role"),
-            @ApiImplicitParam(name = "access_token", value = "令牌", required = true, dataType = "String")
-    })
-    @PostMapping()
-    public JsonResult add(Role role) {
-        if (roleService.add(role)) {
-            return JsonResult.ok("添加成功");
-        } else {
-            return JsonResult.error("添加失败");
-        }
+    @RequestMapping(method = RequestMethod.PUT)
+    @ApiOperation(value = "修改角色表", notes = "修改角色表")
+    public boolean update(@RequestBody Role role){
+        return roleService.update(role);
     }
 
-    @ApiOperation(value = "修改角色")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "role", value = "角色信息", required = true, dataType = "Role"),
-            @ApiImplicitParam(name = "access_token", value = "令牌", required = true, dataType = "String")
-    })
-    @PutMapping()
-    public JsonResult update(Role role) {
-        if (roleService.update(role)) {
-            return JsonResult.ok("修改成功！");
-        } else {
-            return JsonResult.error("修改失败！");
-        }
+    @RequestMapping(method = RequestMethod.DELETE)
+    @ApiOperation(value = "删除角色表", notes = "删除角色表")
+    public boolean delete(@RequestBody Role role){
+        return roleService.delete(role);
     }
 
-    @ApiOperation(value = "删除角色")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "roleId", value = "角色id", required = true, dataType = "String", paramType = "path"),
-            @ApiImplicitParam(name = "access_token", value = "令牌", required = true, dataType = "String")
-    })
-    @DeleteMapping("/{id}")
-    public JsonResult delete(@PathVariable("id") String roleId) {
-        if (roleService.updateState(roleId, 1)) {
-            return JsonResult.ok("删除成功");
-        }
-        return JsonResult.error("删除失败");
+    @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
+    @ApiOperation(value = "删除角色表", notes = "删除角色表")
+    public boolean deleteById(@PathVariable Integer id){
+        return roleService.deleteById(id);
     }
+
+    @RequestMapping(value = "/{id}",method = RequestMethod.GET)
+    @ApiOperation(value = "根据ID查询角色表", notes = "根据ID查询角色表")
+    public Role query(@PathVariable Integer id){
+        return roleService.selectById(id);
+    }
+
+    @RequestMapping(value = "/{pageNum}/{pageSize}",method = RequestMethod.POST)
+    @ApiOperation(value = "根据条件查询角色表", notes = "根据条件查询角色表")
+    public PageInfo<Role> queryByPage(@RequestBody Role role,@PathVariable Integer pageNum,@PathVariable Integer pageSize){
+        return roleService.selectByConditions(role, pageNum, pageSize).toPageInfo();
+    }
+
+    @RequestMapping(value = "/all",method = RequestMethod.POST)
+    @ApiOperation(value = "查询所有角色表", notes = "查询所有角色表")
+    public Page<Role> queryAll(@RequestBody Role role){
+        return roleService.selectByConditions(role, -1, -1);
+    }
+
 }

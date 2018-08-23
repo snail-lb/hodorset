@@ -1,9 +1,11 @@
-package com.snail2lb.web.commons.api;
+package com.snail2lb.web.system.po;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
-
+import java.util.Date;import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * @author: lvbiao
@@ -11,24 +13,32 @@ import java.util.List;
  * @describe:
  * @date 2018-08-23 10:52:48
  */
-public class Role  implements Serializable {
-    private static final long serialVersionUID = 3746930240174935200L;
+@Table(name = "`sys_role`")
+public class RolePO {
     //角色ID
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "`id`")
     private Integer id;
     //角色code
+    @Column(name = "`role_code`")
     private String roleCode;
     //角色名称
+    @Column(name = "`role_name`")
     private String roleName;
     //备注
+    @Column(name = "`comments`")
     private String comments;
     //是否删除，0否，1是
+    @Column(name = "`is_delete`")
     private Integer isDelete;
     //创建时间
+    @Column(name = "`create_time`")
     private Date createTime;
     //修改时间
+    @Column(name = "`update_time`")
     private Date updateTime;
-    //权限
-    private List<Authorities> authorities;
+
 
     public Integer getId() {
         return id;
@@ -37,7 +47,7 @@ public class Role  implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
-    
+
     public String getRoleCode() {
         return roleCode;
     }
@@ -45,7 +55,7 @@ public class Role  implements Serializable {
     public void setRoleCode(String roleCode) {
         this.roleCode = roleCode;
     }
-    
+
     public String getRoleName() {
         return roleName;
     }
@@ -53,7 +63,7 @@ public class Role  implements Serializable {
     public void setRoleName(String roleName) {
         this.roleName = roleName;
     }
-    
+
     public String getComments() {
         return comments;
     }
@@ -61,7 +71,7 @@ public class Role  implements Serializable {
     public void setComments(String comments) {
         this.comments = comments;
     }
-    
+
     public Integer getIsDelete() {
         return isDelete;
     }
@@ -69,7 +79,7 @@ public class Role  implements Serializable {
     public void setIsDelete(Integer isDelete) {
         this.isDelete = isDelete;
     }
-    
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -77,7 +87,7 @@ public class Role  implements Serializable {
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
-    
+
     public Date getUpdateTime() {
         return updateTime;
     }
@@ -86,11 +96,4 @@ public class Role  implements Serializable {
         this.updateTime = updateTime;
     }
 
-    public List<Authorities> getAuthorities() {
-        return authorities;
-    }
-
-    public void setAuthorities(List<Authorities> authorities) {
-        this.authorities = authorities;
-    }
 }

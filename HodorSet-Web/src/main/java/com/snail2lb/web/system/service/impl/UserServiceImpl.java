@@ -1,155 +1,140 @@
 package com.snail2lb.web.system.service.impl;
 
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
-import com.snail2lb.web.common.PageResult;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.snail2lb.web.common.beans.BeanCopyUtil;
-import com.snail2lb.web.common.exception.BusinessException;
-import com.snail2lb.web.common.exception.ParameterException;
-import com.snail2lb.web.common.utils.UUIDUtil;
 import com.snail2lb.web.commons.api.Role;
 import com.snail2lb.web.commons.api.User;
-import com.snail2lb.web.commons.api.UserRole;
-import com.snail2lb.web.system.dao.RoleMapper;
 import com.snail2lb.web.system.dao.UserMapper;
-import com.snail2lb.web.system.dao.UserRoleMapper;
-import com.snail2lb.web.system.model.UserPO;
-import com.snail2lb.web.system.model.UserRolePO;
+import com.snail2lb.web.system.po.UserPO;
+import com.snail2lb.web.system.service.RoleService;
 import com.snail2lb.web.system.service.UserService;
 
+/**
+ * @author: lvbiao
+ * @version: 1.0
+ * @describe:
+ * @date 2018-08-23 10:52:48
+ */
 @Service
 public class UserServiceImpl implements UserService {
+    
     @Autowired
     private UserMapper userMapper;
+
     @Autowired
-    private RoleMapper roleMapper;
+    private RoleService roleService;
+
     @Autowired
-    private UserRoleMapper userRoleMapper;
+    private PasswordEncoder passwordEncoder;
 
     @Override
-    public User getByUsername(String username) {
-        return po2Vo(userMapper.getByUsername(username));
+    public boolean insert(User user) {
+        if(null == user){
+            return false;
+        }
+        UserPO po = vo2Po(user);
+        String password = passwordEncoder.encode(user.getPassword());
+        po.setPassword(password);
+        return userMapper.insertSelective(po) > 0;
     }
 
     @Override
-    public PageResult<User> list(int pageNum, int pageSize, boolean showDelete, String column, String value) {
-        return null;
-        /*Wrapper<UserPO> wrapper = new EntityWrapper<UserPO>();
-        if (StringUtil.isNotBlank(column)) {
-            wrapper.like(column, value);
+    public boolean delete(User user) {
+        if(null == user){
+            return false;
         }
-        if (!showDelete) {
-            wrapper.eq("state", 0);
-        }
-        Page<User> userPage = new Page<>(pageNum, pageSize);
-        List<User> userList = new ArrayList<>();
-        userMapper.selectPage(userPage, wrapper).stream().forEach(userPO ->userList.add(po2Vo(userPO)));
-        // 查询user的角色
-        List<String> userIds = new ArrayList<>();
-        for (User one : userList) {
-            userIds.add(one.getUserId());
-        }
-        List<Role> roles = new ArrayList<>();
-        roleMapper.selectList(null).stream().forEach(rolePO -> roles.add(BeanCopyUtil.copyTo(rolePO, new Role())));
-        List<UserRole> userRoles = new ArrayList<>();
-        userRoleMapper.selectList(new EntityWrapper().in("user_id", userIds)).stream().forEach(userRolePO -> userRoles.add(BeanCopyUtil.copyTo(userRolePO, new UserRole())));
-        for (User one : userList) {
-            List<Role> tempUrs = new ArrayList<>();
-            for (UserRole ur : userRoles) {
-                if (one.getUserId().equals(ur.getUserId())) {
-                    for (Role r : roles) {
-                        if (ur.getRoleId().equals(r.getRoleId())) {
-                            tempUrs.add(r);
-                        }
-                    }
-                }
-            }
-            one.setRoles(tempUrs);
-        }
-        return new PageResult<>(userPage.getTotal(), userList);*/
+        UserPO po = vo2Po(user);
+        return userMapper.delete(po) > 0;
     }
 
     @Override
-    public boolean add(User user) throws BusinessException {
-        String userId = UUIDUtil.randomUUID8();
-        user.setUserId(userId);
-        String finalSecret = "{bcrypt}" + new BCryptPasswordEncoder().encode(user.getPassword());
-        user.setPassword(finalSecret);
-        user.setState(0);
-        Date date = new Date();
-        user.setCreateTime(date);
-        user.setUpdateTime(date);
-        try {
-            boolean rs = userMapper.insert(vo2Po(user)) > 0;
-            if (rs) {
-                addUserRole(userId, user.getRoles());
-            }
-            return rs;
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new BusinessException("账号已经存在");
+    public boolean deleteById(Object id) {
+        if(null == id){
+            return false;
         }
+        return userMapper.deleteByPrimaryKey(id) > 0;
     }
 
     @Override
     public boolean update(User user) {
-        boolean rs = userMapper.updateByPrimaryKeySelective(vo2Po(user)) > 0;
-        if (rs) {
-            UserRolePO po = new UserRolePO();
-            po.setUserId(user.getUserId());
-            userRoleMapper.delete(po);
-            addUserRole(user.getUserId(), user.getRoles());
+        if(null == user){
+            return false;
         }
-        return rs;
+        if(null == user.getId()){
+            return false;
+        }
+        UserPO po = vo2Po(user);
+        return userMapper.updateByPrimaryKeySelective(po) > 0;
     }
 
-    private void addUserRole(String userId, List<Role> roles) {
-        if (roles == null) {
+    @Override
+    public User selectById(Object id) {
+        if(null == id){
+            return null;
+        }
+        UserPO po = userMapper.selectByPrimaryKey(id);
+        User user = po2Vo(po);
+        selectOtherMessage(user);
+        return user;
+    }
+    
+    @Override
+    public Page<User> selectByConditions(User user, Integer pageNum, Integer pageSize) {
+        Page<User> page = PageHelper.startPage(pageNum, pageSize, true);
+        if(pageNum == -1 && pageSize == -1){
+            page.setPageSizeZero(true);
+            page.setPageSize(0);
+        }
+        
+        UserPO conditions = vo2Po(user);
+        List<UserPO> poList =  userMapper.select(conditions);
+        List<User> voList = new ArrayList<>();
+        if(!CollectionUtils.isEmpty(poList)){
+            poList.forEach(po -> {
+                User vo = po2Vo(po);
+                selectOtherMessage(vo);
+                voList.add(vo);
+            });
+        }
+        page.clear();
+        page.addAll(voList);
+        return page;
+    }
+
+    @Override
+    public User selectByUsername(String username) {
+        if(null == username){
+            return null;
+        }
+        UserPO conditions = new UserPO();
+        conditions.setUsername(username);
+        UserPO po = userMapper.selectOne(conditions);
+        User user = po2Vo(po);
+        selectOtherMessage(user);
+        return user;
+    }
+
+    private void selectOtherMessage(User user){
+        if(null == user){
             return;
         }
-        for (Role role : roles) {
-            UserRole userRole = new UserRole();
-            userRole.setId(UUIDUtil.randomUUID8());
-            userRole.setUserId(userId);
-            userRole.setRoleId(role.getRoleId());
-            userRole.setCreateTime(new Date());
-            userRoleMapper.insert(BeanCopyUtil.copyTo(userRole, new UserRolePO()));
+        if(StringUtils.isNotBlank(user.getRoleCode())) {
+            Role role = roleService.selectByRoleCode(user.getRoleCode());
+            user.setRole(role);
+            if(!CollectionUtils.isEmpty(role.getAuthorities())){
+                user.setAuthorities(role.getAuthorities());
+            }
         }
-    }
-
-    @Override
-    public boolean updateState(String userId, int state) throws ParameterException {
-        if (state != 0 && state != 1) {
-            throw new ParameterException("state值需要在[0,1]中");
-        }
-        User user = new User();
-        user.setUserId(userId);
-        user.setState(state);
-        return userMapper.updateByPrimaryKeySelective(vo2Po(user)) > 0;
-    }
-
-    @Override
-    public boolean updatePsw(String userId, String password) {
-        User user = new User();
-        user.setUserId(userId);
-        String finalSecret = "{bcrypt}" + new BCryptPasswordEncoder().encode(password);
-        user.setPassword(finalSecret);
-        return userMapper.updateByPrimaryKeySelective(vo2Po(user)) > 0;
-    }
-
-    @Override
-    public User getById(String userId) {
-        return po2Vo(userMapper.selectByPrimaryKey(userId));
-    }
-
-    @Override
-    public boolean delete(String userId) {
-        return userMapper.deleteByPrimaryKey(userId) > 0;
     }
 
     private UserPO vo2Po(User vo){
@@ -159,4 +144,5 @@ public class UserServiceImpl implements UserService {
     private User po2Vo(UserPO po){
         return BeanCopyUtil.copyTo(po, new User());
     }
+    
 }

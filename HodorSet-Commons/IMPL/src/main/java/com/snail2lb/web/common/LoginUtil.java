@@ -7,15 +7,15 @@ import com.snail2lb.web.commons.api.User;
 
 
 /**
- * Controller基类
+ *
  * Created by lvbiao on 2018-02-22 上午 11:29.
  */
-public class BaseController {
+public class LoginUtil {
 
     /**
      * 获取当前登录的user
      */
-    public User getLoginUser() {
+    public static User getLoginUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null) {
             Object object = authentication.getPrincipal();
@@ -24,14 +24,6 @@ public class BaseController {
             }
         }
         return null;
-    }
-
-    /**
-     * 获取当前登录的userId
-     */
-    public String getLoginUserId() {
-        User loginUser = getLoginUser();
-        return loginUser == null ? null : loginUser.getUserId();
     }
 
 }

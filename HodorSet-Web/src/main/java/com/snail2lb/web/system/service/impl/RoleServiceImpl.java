@@ -1,105 +1,131 @@
 package com.snail2lb.web.system.service.impl;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.snail2lb.web.common.beans.BeanCopyUtil;
-import com.snail2lb.web.common.exception.ParameterException;
-import com.snail2lb.web.common.utils.UUIDUtil;
+import com.snail2lb.web.commons.api.Authorities;
 import com.snail2lb.web.commons.api.Role;
-import com.snail2lb.web.system.dao.RoleAuthoritiesMapper;
 import com.snail2lb.web.system.dao.RoleMapper;
-import com.snail2lb.web.system.dao.UserRoleMapper;
-import com.snail2lb.web.system.model.RoleAuthoritiesPO;
-import com.snail2lb.web.system.model.RolePO;
-import com.snail2lb.web.system.model.UserRolePO;
+import com.snail2lb.web.system.po.RolePO;
+import com.snail2lb.web.system.service.AuthoritiesService;
 import com.snail2lb.web.system.service.RoleService;
-import tk.mybatis.mapper.entity.Example;
 
+/**
+ * @author: lvbiao
+ * @version: 1.0
+ * @describe:
+ * @date 2018-08-23 10:52:48
+ */
 @Service
 public class RoleServiceImpl implements RoleService {
+    
     @Autowired
     private RoleMapper roleMapper;
+
     @Autowired
-    private RoleAuthoritiesMapper roleAuthoritiesMapper;
-    @Autowired
-    private UserRoleMapper userRoleMapper;
+    private AuthoritiesService authoritiesService;
 
     @Override
-    public String[] getRoleIds(String userId) {
-        UserRolePO po = new UserRolePO();
-        po.setUserId(userId);
-        List<UserRolePO> userRoles = userRoleMapper.select(po);
-        String[] roleIds = new String[userRoles.size()];
-        for (int i = 0; i < userRoles.size(); i++) {
-            roleIds[i] = userRoles.get(i).getRoleId();
+    public boolean insert(Role role) {
+        if(null == role){
+            return false;
         }
-        return roleIds;
+        RolePO po = vo2Po(role);
+        return roleMapper.insertSelective(po) > 0;
     }
 
     @Override
-    public List<Role> list(boolean showDelete) {
-        Example example = new Example(RolePO.class);
-        if (!showDelete) {
-            example.createCriteria().andEqualTo("is_delete",0);
+    public boolean delete(Role role) {
+        if(null == role){
+            return false;
         }
-        example.setOrderByClause("create_time");
-
-        List<RolePO> pos =  roleMapper.selectByExample(example);
-        List<Role> result = new ArrayList<>();
-        if(!CollectionUtils.isEmpty(pos)){
-            pos.stream().forEach(po -> result.add(po2Vo(po)));
-        }
-        return result;
+        RolePO po = vo2Po(role);
+        return roleMapper.delete(po) > 0;
     }
 
     @Override
-    public boolean add(Role role) {
-        role.setRoleId(UUIDUtil.randomUUID8());
-        role.setCreateTime(new Date());
-        return roleMapper.insert(vo2Po(role)) > 0;
+    public boolean deleteById(Object id) {
+        if(null == id){
+            return false;
+        }
+        return roleMapper.deleteByPrimaryKey(id) > 0;
     }
 
     @Override
     public boolean update(Role role) {
-        RolePO po = vo2Po(role);
-
-        if(po.getRoleId() ==null){
-            throw new ParameterException("修改Role需要设置roleId值");
+        if(null == role){
+            return false;
         }
+        if(null == role.getId()){
+            return false;
+        }
+        RolePO po = vo2Po(role);
         return roleMapper.updateByPrimaryKeySelective(po) > 0;
     }
 
     @Override
-    public boolean updateState(String roleId, int isDelete) {
-        if (isDelete != 0 && isDelete != 1) {
-            throw new ParameterException("isDelete值需要在[0,1]中");
+    public Role selectById(Object id) {
+        if(null == id){
+            return null;
         }
-        Role role = new Role();
-        role.setRoleId(roleId);
-        role.setIsDelete(isDelete);
-        boolean rs = update(role);
-        if (rs) {  //删除角色的权限
-            RoleAuthoritiesPO po = new RoleAuthoritiesPO();
-            po.setRoleId(roleId);
-            roleAuthoritiesMapper.delete(po);
+        RolePO po = roleMapper.selectByPrimaryKey(id);
+        Role vo = po2Vo(po);
+        selectOtherMessage(vo);
+        return vo;
+    }
+    
+    @Override
+    public Page<Role> selectByConditions(Role role, Integer pageNum, Integer pageSize) {
+        Page<Role> page = PageHelper.startPage(pageNum, pageSize, true);
+        if(pageNum == -1 && pageSize == -1){
+            page.setPageSizeZero(true);
+            page.setPageSize(0);
         }
-        return rs;
+        
+        RolePO conditions = vo2Po(role);
+        List<RolePO> poList =  roleMapper.select(conditions);
+        List<Role> voList = new ArrayList<>();
+        if(!CollectionUtils.isEmpty(poList)){
+            poList.forEach(po -> {
+                Role vo = po2Vo(po);
+                selectOtherMessage(vo);
+                voList.add(vo);
+            });
+        }
+        page.clear();
+        page.addAll(voList);
+        return page;
     }
 
     @Override
-    public Role getById(String roleId) {
-        return po2Vo(roleMapper.selectByPrimaryKey(roleId));
+    public Role selectByRoleCode(String roleCode) {
+        if(StringUtils.isBlank(roleCode)){
+            return null;
+        }
+        RolePO roleConditions = new RolePO();
+        roleConditions.setRoleCode(roleCode);
+        RolePO po = roleMapper.selectOne(roleConditions);
+        Role vo = po2Vo(po);
+        selectOtherMessage(vo);
+        return vo;
     }
 
-    @Override
-    public boolean delete(String roleId) {
-        return roleMapper.deleteByPrimaryKey(roleId) > 0;
+    private void selectOtherMessage(Role role){
+        if(null == role){
+            return;
+        }
+        if(StringUtils.isNotBlank(role.getRoleCode())) {
+            List<Authorities> authoritiesList = authoritiesService.selectByRoleCode(role.getRoleCode());
+            role.setAuthorities(authoritiesList);
+        }
     }
 
     private RolePO vo2Po(Role vo){
@@ -109,4 +135,5 @@ public class RoleServiceImpl implements RoleService {
     private Role po2Vo(RolePO po){
         return BeanCopyUtil.copyTo(po, new Role());
     }
+    
 }

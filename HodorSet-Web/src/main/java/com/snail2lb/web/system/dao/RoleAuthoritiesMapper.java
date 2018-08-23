@@ -1,11 +1,15 @@
 package com.snail2lb.web.system.dao;
 
-
-import com.snail2lb.web.system.model.RoleAuthoritiesPO;
+import com.snail2lb.web.system.po.RoleAuthoritiesPO;
 import tk.mybatis.mapper.common.Mapper;
 
+/**
+ * @author: lvbiao
+ * @version: 1.0
+ * @describe:
+ * @date 2018-08-23 10:52:48
+ */
 @org.apache.ibatis.annotations.Mapper
-public interface RoleAuthoritiesMapper extends Mapper<RoleAuthoritiesPO> {
+public interface RoleAuthoritiesMapper extends Mapper<RoleAuthoritiesPO>{
 
-    int deleteTrash();
 }

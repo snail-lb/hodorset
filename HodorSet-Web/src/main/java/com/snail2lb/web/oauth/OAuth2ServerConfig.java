@@ -1,6 +1,7 @@
 package com.snail2lb.web.oauth;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.http.HttpMethod;
@@ -23,6 +24,7 @@ import org.springframework.security.oauth2.provider.token.store.redis.RedisToken
  */
 @Configuration
 public class OAuth2ServerConfig {
+
     private static final String RESOURCE_ID = "api";  //资源ID
 
     /**
@@ -41,11 +43,7 @@ public class OAuth2ServerConfig {
         public void configure(HttpSecurity http) throws Exception {
             // 配置必须认证过后才可以访问的接口
             http.authorizeRequests()
-                    .antMatchers("/user/**").authenticated()
-                    .antMatchers("/role/**").authenticated()
-                    .antMatchers("/authorities/**").authenticated()
-                    .antMatchers("/loginRecord/**").authenticated()
-                    .antMatchers("/userInfo").authenticated();
+                    .antMatchers("/v1/**").authenticated();
         }
     }
 
@@ -57,12 +55,17 @@ public class OAuth2ServerConfig {
     protected static class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
         @Autowired
         private AuthenticationManager authenticationManager;
+
         @Autowired
         private RedisConnectionFactory redisConnectionFactory;
 
+        @Value("${hodorset.oauth2.client.secret:123456}")
+        private String clientSecret;
+
         @Override
         public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-            String finalSecret = "{bcrypt}" + new BCryptPasswordEncoder().encode("123456");
+            String finalSecret = "{bcrypt}" + new BCryptPasswordEncoder().encode(clientSecret);
+            System.out.println("finalSecret:" + finalSecret);
             //配置两个客户端,一个用于password认证一个用于client认证
             clients.inMemory()
                     .withClient("client_1")
@@ -71,13 +74,15 @@ public class OAuth2ServerConfig {
                     .scopes("select")
                     .authorities("client")
                     .secret(finalSecret)
+                    .accessTokenValiditySeconds(300)
                     .and()
                     .withClient("client_2")
                     .resourceIds(RESOURCE_ID)
                     .authorizedGrantTypes("password", "refresh_token")
                     .scopes("select")
                     .authorities("oauth2")
-                    .secret(finalSecret);
+                    .secret(finalSecret)
+                    .accessTokenValiditySeconds(300);
         }
 
         @Override

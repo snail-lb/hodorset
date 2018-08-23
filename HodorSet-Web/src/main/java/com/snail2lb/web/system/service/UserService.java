@@ -1,26 +1,28 @@
 package com.snail2lb.web.system.service;
 
-import com.snail2lb.web.common.PageResult;
-import com.snail2lb.web.common.exception.BusinessException;
-import com.snail2lb.web.common.exception.ParameterException;
+import com.github.pagehelper.Page;
 import com.snail2lb.web.commons.api.User;
 
+/**
+ * @author: lvbiao
+ * @version: 1.0
+ * @describe:
+ * @date 2018-08-23 10:52:48
+ */
 public interface UserService {
 
-    User getByUsername(String username);
+    boolean insert(User user);
 
-    PageResult<User> list(int pageNum, int pageSize, boolean showDelete, String searchKey, String searchValue);
+    boolean delete(User user);
 
-    User getById(String userId);
-
-    boolean add(User user) throws BusinessException;
+    boolean deleteById(Object id);
 
     boolean update(User user);
 
-    boolean updateState(String userId, int state) throws ParameterException;
+    User selectById(Object id);
 
-    boolean updatePsw(String userId, String newPsw);
+    Page<User> selectByConditions(User user, Integer pageNum, Integer pageSize);
 
-    boolean delete(String userId);
+    User selectByUsername(String username);
 
 }

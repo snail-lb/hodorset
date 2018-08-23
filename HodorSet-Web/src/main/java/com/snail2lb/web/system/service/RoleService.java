@@ -1,23 +1,28 @@
 package com.snail2lb.web.system.service;
 
-import java.util.List;
-
+import com.github.pagehelper.Page;
 import com.snail2lb.web.commons.api.Role;
 
+/**
+ * @author: lvbiao
+ * @version: 1.0
+ * @describe:
+ * @date 2018-08-23 10:52:48
+ */
 public interface RoleService {
 
-    String[] getRoleIds(String userId);
+    boolean insert(Role role);
 
-    List<Role> list(boolean showDelete);
+    boolean delete(Role role);
 
-    Role getById(String roleId);
-
-    boolean add(Role role);
+    boolean deleteById(Object id);
 
     boolean update(Role role);
 
-    boolean updateState(String roleId, int isDelete);
+    Role selectById(Object id);
 
-    boolean delete(String roleId);
+    Page<Role> selectByConditions(Role role, Integer pageNum, Integer pageSize);
+
+    Role selectByRoleCode(String roleCode);
 
 }
