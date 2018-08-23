@@ -5,6 +5,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.snail2lb.web.common.JsonResult;
@@ -15,6 +17,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 
 @Api(value = "登录注册相关的接口", tags = "main-controller")
+@RequestMapping("/v1/user")
 @RestController
 public class MainController {
 
@@ -32,9 +35,11 @@ public class MainController {
         return null;
     }
 
-    @ApiOperation(value = "获取个人信息")
-    @ApiImplicitParam(name = "access_token", value = "令牌", required = true, dataType = "String")
-    @GetMapping("/userInfo")
+//    @ApiOperation(value = "获取个人信息")
+//    @ApiImplicitParam(name = "access_token", value = "令牌", required = true, dataType = "String")
+//    @GetMapping("/userInfo")
+    @RequestMapping(value = "/userInfo",method = RequestMethod.GET)
+    @ApiOperation(value = "获取当前登录用户信息", notes = "获取当前登录用户信息")
     public JsonResult userInfo() {
         return JsonResult.ok().put("user", getLoginUser());
     }

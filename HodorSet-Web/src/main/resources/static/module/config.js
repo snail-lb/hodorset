@@ -2,13 +2,21 @@ layui.define(function (exports) {
 
     var config = {
         base_server: 'http://localhost:8088/', // 接口地址
-        tableName: 'easyweb',  // 存储表名
+        tableName: 'hodorset',  // 存储表名
         autoRender: false,  // 窗口大小改变后是否自动重新渲染表格，解决layui数据表格非响应式的问题
         // 获取缓存的token
         getToken: function () {
             var t = layui.data(config.tableName).token;
             if (t) {
                 return JSON.parse(t);
+            }
+        },
+        getAuthorization: function () {
+            var t = layui.data(config.tableName).token;
+            if (t) {
+                var token = JSON.parse(t);
+                var authorization = token.token_type + " " + token.access_token;
+                return authorization;
             }
         },
         // 清除user

@@ -5,12 +5,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.pagehelper.Page;
-import com.github.pagehelper.PageInfo;
-import com.snail2lb.web.system.service.UserService;
+import com.snail2lb.web.common.PageResult;
 import com.snail2lb.web.commons.api.User;
+import com.snail2lb.web.system.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -58,10 +59,14 @@ public class UserController {
         return userService.selectById(id);
     }
 
-    @RequestMapping(value = "/{pageNum}/{pageSize}",method = RequestMethod.POST)
+    @RequestMapping(value = "/page",method = RequestMethod.POST)
     @ApiOperation(value = "根据条件查询用户表", notes = "根据条件查询用户表")
-    public PageInfo<User> queryByPage(@RequestBody User user,@PathVariable Integer pageNum,@PathVariable Integer pageSize){
-        return userService.selectByConditions(user, pageNum, pageSize).toPageInfo();
+    public PageResult<User> queryByPage(@RequestBody(required = false) User user,
+                                      @RequestParam(name = "pageNum", defaultValue = "1", required = false) Integer pageNum,
+                                      @RequestParam(name = "pageSize", defaultValue = "20",  required = false) Integer pageSize){
+        Page<User> userPage = userService.selectByConditions(user, pageNum, pageSize);
+        PageResult<User> page = new PageResult<>(userPage.getTotal(), userPage.getPageNum(), userPage.getPageSize(), userPage.getResult());
+        return page;
     }
 
     @RequestMapping(value = "/all",method = RequestMethod.POST)

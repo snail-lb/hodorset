@@ -29,21 +29,21 @@ public class PageResult<T> {
         this.data = rows;
         this.count = rows.size();
         this.code = 0;
-        this.msg = "";
+        this.msg = "查询成功";
     }
 
     public PageResult(long total, List<T> rows) {
         this.count = total;
         this.data = rows;
         this.code = 0;
-        this.msg = "";
+        this.msg = "查询成功";
     }
 
     public PageResult(long total,Integer pageNum,Integer pageSize, List<T> rows) {
         this.count = total;
         this.data = rows;
         this.code = 0;
-        this.msg = "";
+        this.msg = "查询成功";
         this.pageNum = pageNum;
         this.pageSize = pageSize;
     }

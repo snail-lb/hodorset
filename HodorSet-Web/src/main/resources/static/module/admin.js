@@ -111,23 +111,26 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
         },
         // 封装ajax请求
         req: function (url, data, success, method) {
-            if ('put' == method.toLowerCase()) {
+            /*if ('put' == method.toLowerCase()) {
                 method = 'POST';
                 data._method = 'PUT';
             } else if ('delete' == method.toLowerCase()) {
                 method = 'POST';
                 data._method = 'DELETE';
-            }
-            var token = config.getToken();
-            if (token) {
-                data.access_token = token.access_token;
-            }
+            }*/
+
             $.ajax({
                 url: config.base_server + url,
                 data: data,
                 type: method,
                 dataType: 'JSON',
                 contentType: "application/json",
+                beforeSend: function (XMLHttpRequest) {
+                    var authorization = config.getAuthorization();
+                    if (authorization) {
+                        XMLHttpRequest.setRequestHeader("authorization", authorization);
+                    }
+                },
                 success: function (data) {
                     success(data);
                 },
@@ -140,12 +143,6 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
                         });
                     } else {
                         success({code: xhr.status, msg: xhr.statusText});
-                    }
-                },
-                beforeSend: function (xhr) {
-                    var token = config.getToken();
-                    if (token) {
-                        xhr.setRequestHeader('Authorization', 'Basic ' + token.access_token);
                     }
                 }
             });
