@@ -1,16 +1,19 @@
 package com.snail2lb.web.system.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.pagehelper.Page;
-import com.github.pagehelper.PageInfo;
-import com.snail2lb.web.system.service.AuthoritiesService;
+import com.snail2lb.web.common.PageResult;
 import com.snail2lb.web.commons.api.Authorities;
+import com.snail2lb.web.system.service.AuthoritiesService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -58,15 +61,19 @@ public class AuthoritiesController {
         return authoritiesService.selectById(id);
     }
 
-    @RequestMapping(value = "/{pageNum}/{pageSize}",method = RequestMethod.POST)
+    @RequestMapping(value = "/page",method = RequestMethod.POST)
     @ApiOperation(value = "根据条件查询权限表", notes = "根据条件查询权限表")
-    public PageInfo<Authorities> queryByPage(@RequestBody Authorities authorities,@PathVariable Integer pageNum,@PathVariable Integer pageSize){
-        return authoritiesService.selectByConditions(authorities, pageNum, pageSize).toPageInfo();
+    public PageResult<Authorities> queryByPage(@RequestBody Authorities authorities,
+                                               @RequestParam(name = "pageNum", defaultValue = "1", required = false) Integer pageNum,
+                                               @RequestParam(name = "pageSize", defaultValue = "20",  required = false) Integer pageSize){
+        Page<Authorities> userPage = authoritiesService.selectByConditions(authorities, pageNum, pageSize);
+        PageResult<Authorities> page = new PageResult<>(userPage);
+        return page;
     }
 
     @RequestMapping(value = "/all",method = RequestMethod.POST)
     @ApiOperation(value = "查询所有权限表", notes = "查询所有权限表")
-    public Page<Authorities> queryAll(@RequestBody Authorities authorities){
+    public List<Authorities> queryAll(@RequestBody Authorities authorities){
         return authoritiesService.selectByConditions(authorities, -1, -1);
     }
 

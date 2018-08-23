@@ -48,6 +48,15 @@ public class PageResult<T> {
         this.pageSize = pageSize;
     }
 
+    public PageResult(Page<T> page){
+        this.count = page.getTotal();
+        this.data = page.getResult();
+        this.code = 0;
+        this.msg = "查询成功";
+        this.pageNum = page.getPageNum();
+        this.pageSize = page.getPageSize();
+    }
+
     public int getCode() {
         return code;
     }

@@ -35,9 +35,6 @@ public class MainController {
         return null;
     }
 
-//    @ApiOperation(value = "获取个人信息")
-//    @ApiImplicitParam(name = "access_token", value = "令牌", required = true, dataType = "String")
-//    @GetMapping("/userInfo")
     @RequestMapping(value = "/userInfo",method = RequestMethod.GET)
     @ApiOperation(value = "获取当前登录用户信息", notes = "获取当前登录用户信息")
     public JsonResult userInfo() {

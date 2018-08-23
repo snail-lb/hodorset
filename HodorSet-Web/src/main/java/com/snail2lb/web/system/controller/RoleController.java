@@ -1,16 +1,19 @@
 package com.snail2lb.web.system.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.pagehelper.Page;
-import com.github.pagehelper.PageInfo;
-import com.snail2lb.web.system.service.RoleService;
+import com.snail2lb.web.common.PageResult;
 import com.snail2lb.web.commons.api.Role;
+import com.snail2lb.web.system.service.RoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -58,16 +61,19 @@ public class RoleController {
         return roleService.selectById(id);
     }
 
-    @RequestMapping(value = "/{pageNum}/{pageSize}",method = RequestMethod.POST)
+    @RequestMapping(value = "/page",method = RequestMethod.POST)
     @ApiOperation(value = "根据条件查询角色表", notes = "根据条件查询角色表")
-    public PageInfo<Role> queryByPage(@RequestBody Role role,@PathVariable Integer pageNum,@PathVariable Integer pageSize){
-        return roleService.selectByConditions(role, pageNum, pageSize).toPageInfo();
+    public PageResult<Role> queryByPage(@RequestBody Role role,
+                                      @RequestParam(name = "pageNum", defaultValue = "1", required = false) Integer pageNum,
+                                      @RequestParam(name = "pageSize", defaultValue = "20",  required = false) Integer pageSize){
+        Page<Role> userPage = roleService.selectByConditions(role, pageNum, pageSize);
+        PageResult<Role> page = new PageResult<>(userPage);
+        return page;
     }
 
     @RequestMapping(value = "/all",method = RequestMethod.POST)
     @ApiOperation(value = "查询所有角色表", notes = "查询所有角色表")
-    public Page<Role> queryAll(@RequestBody Role role){
+    public List<Role> queryAll(@RequestBody Role role){
         return roleService.selectByConditions(role, -1, -1);
     }
-
 }

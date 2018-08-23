@@ -1,5 +1,7 @@
 package com.snail2lb.web.system.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -65,13 +67,13 @@ public class UserController {
                                       @RequestParam(name = "pageNum", defaultValue = "1", required = false) Integer pageNum,
                                       @RequestParam(name = "pageSize", defaultValue = "20",  required = false) Integer pageSize){
         Page<User> userPage = userService.selectByConditions(user, pageNum, pageSize);
-        PageResult<User> page = new PageResult<>(userPage.getTotal(), userPage.getPageNum(), userPage.getPageSize(), userPage.getResult());
+        PageResult<User> page = new PageResult<>(userPage);
         return page;
     }
 
     @RequestMapping(value = "/all",method = RequestMethod.POST)
     @ApiOperation(value = "查询所有用户表", notes = "查询所有用户表")
-    public Page<User> queryAll(@RequestBody User user){
+    public List<User> queryAll(@RequestBody User user){
         return userService.selectByConditions(user, -1, -1);
     }
 

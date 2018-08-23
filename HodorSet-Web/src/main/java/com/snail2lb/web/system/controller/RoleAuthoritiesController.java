@@ -1,16 +1,19 @@
 package com.snail2lb.web.system.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.pagehelper.Page;
-import com.github.pagehelper.PageInfo;
-import com.snail2lb.web.system.service.RoleAuthoritiesService;
+import com.snail2lb.web.common.PageResult;
 import com.snail2lb.web.commons.api.RoleAuthorities;
+import com.snail2lb.web.system.service.RoleAuthoritiesService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -58,15 +61,19 @@ public class RoleAuthoritiesController {
         return roleAuthoritiesService.selectById(id);
     }
 
-    @RequestMapping(value = "/{pageNum}/{pageSize}",method = RequestMethod.POST)
+    @RequestMapping(value = "/page",method = RequestMethod.POST)
     @ApiOperation(value = "根据条件查询角色权限关联表", notes = "根据条件查询角色权限关联表")
-    public PageInfo<RoleAuthorities> queryByPage(@RequestBody RoleAuthorities roleAuthorities,@PathVariable Integer pageNum,@PathVariable Integer pageSize){
-        return roleAuthoritiesService.selectByConditions(roleAuthorities, pageNum, pageSize).toPageInfo();
+    public PageResult<RoleAuthorities> queryByPage(@RequestBody RoleAuthorities roleAuthorities,
+                                                 @RequestParam(name = "pageNum", defaultValue = "1", required = false) Integer pageNum,
+                                                 @RequestParam(name = "pageSize", defaultValue = "20",  required = false) Integer pageSize){
+        Page<RoleAuthorities> userPage = roleAuthoritiesService.selectByConditions(roleAuthorities, pageNum, pageSize);
+        PageResult<RoleAuthorities> page = new PageResult<>(userPage);
+        return page;
     }
 
     @RequestMapping(value = "/all",method = RequestMethod.POST)
     @ApiOperation(value = "查询所有角色权限关联表", notes = "查询所有角色权限关联表")
-    public Page<RoleAuthorities> queryAll(@RequestBody RoleAuthorities roleAuthorities){
+    public List<RoleAuthorities> queryAll(@RequestBody RoleAuthorities roleAuthorities){
         return roleAuthoritiesService.selectByConditions(roleAuthorities, -1, -1);
     }
 
