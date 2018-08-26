@@ -1,14 +1,17 @@
 package com.snail2lb.web.echart.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.pagehelper.Page;
-import com.github.pagehelper.PageInfo;
+import com.snail2lb.web.common.PageResult;
 import com.snail2lb.web.echart.api.vo.CustomOption;
 import com.snail2lb.web.echart.service.CustomOptionService;
 import io.swagger.annotations.Api;
@@ -58,15 +61,19 @@ public class CustomOptionController {
         return customOptionService.selectById(id);
     }
 
-    @RequestMapping(value = "/{pageNum}/{pageSize}",method = RequestMethod.POST)
+    @RequestMapping(value = "/page",method = RequestMethod.POST)
     @ApiOperation(value = "根据条件查询customOption", notes = "根据条件查询customOption")
-    public PageInfo<CustomOption> queryByPage(@RequestBody CustomOption customOption,@PathVariable Integer pageNum,@PathVariable Integer pageSize){
-        return customOptionService.selectByConditions(customOption, pageNum, pageSize).toPageInfo();
+    public PageResult<CustomOption> queryByPage(@RequestBody CustomOption customOption,
+                                              @RequestParam(name = "pageNum", defaultValue = "1", required = false) Integer pageNum,
+                                              @RequestParam(name = "pageSize", defaultValue = "20",  required = false) Integer pageSize){
+        Page<CustomOption> userPage = customOptionService.selectByConditions(customOption, pageNum, pageSize);
+        PageResult<CustomOption> page = new PageResult<>(userPage);
+        return page;
     }
 
     @RequestMapping(value = "/all",method = RequestMethod.POST)
     @ApiOperation(value = "查询所有customOption", notes = "查询所有customOption")
-    public Page<CustomOption> queryAll(@RequestBody CustomOption customOption){
+    public List<CustomOption> queryAll(@RequestBody CustomOption customOption){
         return customOptionService.selectByConditions(customOption, -1, -1);
     }
 
